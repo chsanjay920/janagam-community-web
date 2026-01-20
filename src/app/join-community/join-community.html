@@ -1,0 +1,277 @@
+<nav>
+  <div class="nav__header">
+    <div class="nav__logo">
+      <a href="#" class="logo">Janagam Community </a>
+    </div>
+    <div class="nav__menu__btn" id="menu-btn">
+      <i class="ri-menu-line"></i>
+    </div>
+  </div>
+  <ul class="nav__links" id="nav-links">
+    <li><a href="#">HOME</a></li>
+    <li><a href="#">ABOUT</a></li>
+    <li><a href="#">WHY JOIN US</a></li>
+    <li><a href="#">RATINGS</a></li>
+    <li><a href="#">CONTACT</a></li>
+    <li><a>Explore Members</a></li>
+  </ul>
+  <div class="nav__btns">
+    <button class="cu_btn">Explore Members</button>
+    <button class="cu_btn-secondary" style="margin-left: 15px;">Login</button>
+  </div>
+</nav>
+
+<header id="home">
+  <div class="header__container">
+    <div class="header__content">
+      <h2>Register Now and Become Part of the Janagam Community.</h2>
+    </div>
+  </div>
+</header>
+
+<section class="vertical__section" >
+  <div class="d-flex">
+    <div class="col-4 d-none d-lg-block">
+      <div class="container">
+        <div class="shadow__card">
+          <span><i class="ri-camera-lens-line"></i></span>
+          <h4>View Contacts</h4>
+          <p>
+            Access contact number and connect directly on call or via sms
+          </p>
+        </div>
+        <div class="shadow__card">
+          <span><i class="ri-ship-line"></i></span>
+          <h4>View Email</h4>
+          <p>
+            Get the email id of your selected profile and reach via email
+          </p>
+        </div>
+        <div class="shadow__card">
+          <span><i class="ri-landscape-line"></i></span>
+          <h4>Showcasing Community’s Strength</h4>
+          <p>
+            To highlight the unity, achievements, and cultural richness of the Janagam community, strengthening pride
+            and
+            collective identity.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-8">
+      <div class="container-fluid">
+        <form class="shadow__form">
+          <h3 class="mb-4">Registration Details</h3>
+
+          <!-- Name -->
+          <div class="row g-3 mb-3">
+            <div class="col-md-4">
+              <label class="form-label">First Name</label>
+              <input type="text" class="form-control">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Middle Name</label>
+              <input type="text" class="form-control">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Last Name</label>
+              <input type="text" class="form-control">
+            </div>
+          </div>
+
+          <!-- Gender, DOB, Age -->
+          <div class="row g-3 mb-3">
+            <div class="col-md-4">
+              <label class="form-label">Gender</label>
+              <select class="form-select">
+                <option value="">Select</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Date of Birth</label>
+              <input type="date" id="dob" class="form-control" onchange="calculateAge()">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Age</label>
+              <input type="number" id="age" class="form-control" readonly>
+            </div>
+          </div>
+
+          <!-- Contact -->
+          <div class="row g-3 mb-3">
+            <div class="col-md-4">
+              <label class="form-label">Marital Status</label>
+              <select class="form-select">
+                <option>Select</option>
+                <option>Single</option>
+                <option>Married</option>
+                <option>Divorced</option>
+                <option>Widowed</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Mobile Number</label>
+              <input type="tel" class="form-control">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Alternate Mobile</label>
+              <input type="tel" class="form-control">
+            </div>
+          </div>
+
+          <!-- Email & Aadhaar -->
+          <div class="row g-3 mb-4">
+            <div class="col-md-4">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Aadhaar Number</label>
+              <input type="text" class="form-control">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Sub-Caste / Gothram</label>
+              <input type="text" class="form-control">
+            </div>
+          </div>
+          <hr>
+          <!-- Family Details -->
+          <h4 class="mb-3">Family Details</h4>
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label">Father’s Name</label>
+              <input type="text" class="form-control">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Father’s Occupation</label>
+              <input type="text" class="form-control">
+            </div>
+          </div>
+
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label">Mother’s Name</label>
+              <input type="text" class="form-control">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Mother’s Occupation</label>
+              <input type="text" class="form-control">
+            </div>
+          </div>
+<hr>
+          <!-- Address -->
+          <h4 class="mb-3">Address Details</h4>
+          <div class="row g-3 mb-3">
+            <div class="col-md-4">
+              <label class="form-label">House No</label>
+              <input type="text" class="form-control">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Street</label>
+              <input type="text" class="form-control">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">City</label>
+              <input type="text" class="form-control">
+            </div>
+          </div>
+<hr>
+          <!-- Education -->
+          <h4 class="mb-3">Education Details</h4>
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label class="form-label">Highest Qualification</label>
+              <select class="form-select">
+                <option>SSC</option>
+                <option>Intermediate</option>
+                <option>Diploma</option>
+                <option>Degree</option>
+                <option>PG</option>
+                <option>PhD</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Course</label>
+              <input type="text" class="form-control">
+            </div>
+          </div>
+
+          <div class="text-center">
+            <button class="cu_btn px-5">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="section__container footer__container">
+    <div class="footer__col">
+      <div class="footer__logo">
+        <a href="#" class="logo">Janagan Community Online</a>
+      </div>
+      <p>
+        Connecting, Showcasing, and Strengthening the Janagam Community
+      </p>
+      <ul class="footer__socials">
+        <li>
+          <a href="#!"><i class="ri-facebook-fill"></i></a>
+        </li>
+        <li>
+          <a href="#!"><i class="ri-instagram-line"></i></a>
+        </li>
+        <li>
+          <a href="#!"><i class="ri-youtube-line"></i></a>
+        </li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h4>Quick Links</h4>
+      <ul class="footer__links">
+
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a style="cursor: pointer;">Join Us</a></li>
+        <li><a href="#ratings">Ratings</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h4>Contact Us</h4>
+      <ul class="footer__links">
+        <li>
+          <a href="#">
+            <span><i class="ri-phone-fill"></i></span>+91 12345 67890
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <span><i class="ri-record-mail-line"></i></span>
+            info@janagamcommunity.com
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <span><i class="ri-map-pin-2-fill"></i></span> Hyderabad, India
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h4>Subscribe</h4>
+      <form action="#!">
+        <input type="text" placeholder="Enter your email" />
+        <button class="cu_btn">Subscribe</button>
+      </form>
+    </div>
+  </div>
+  <div class="footer__bar">
+    <p>
+      Developed by
+      <a class="text-white" href="" target="_blank">Jay Networks</a>
+    </p>
+  </div>
+</footer>

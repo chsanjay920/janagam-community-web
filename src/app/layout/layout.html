@@ -16,8 +16,8 @@
     <li><a (click)="redirect('explore')">Explore Members</a></li>
   </ul>
   <div class="nav__btns">
-    <button class="btn" (click)="redirect('explore')">Explore Members</button>
-    <button class="btn-secondary" style="margin-left: 15px;"
+    <button class="cu_btn" (click)="redirect('explore')">Explore Members</button>
+    <button class="cu_btn-secondary" style="margin-left: 15px;"
     (click)="redirect('login')">Login</button>
   </div>
 </nav>
@@ -29,8 +29,14 @@
       <br>
       <h1>Connecting Janagam's, Through Online Portal</h1>
       <div class="header__btns">
-        <button class="btn">Join the Community</button>
-        <button class="btn" (click)="redirect('explore')">Explore Members</button>
+        <div class="d-flex justify-content-center flex-wrap">
+          <div class="m-1">
+            <button class="cu_btn">Join the Community</button>
+          </div>
+          <div class="m-1">
+            <button class="cu_btn-secondary" (click)="redirect('explore')">Explore Members</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -53,7 +59,7 @@
       around the world.
     </p>
     <div class="showcase__btn">
-      <button class="btn">
+      <button class="cu_btn">
         Join our vibrant online community.
         <span><i class="ri-arrow-right-line"></i></span>
       </button>
@@ -166,7 +172,7 @@
       <h4>Subscribe</h4>
       <form action="#!">
         <input type="text" placeholder="Enter your email" />
-        <button class="btn">Subscribe</button>
+        <button class="cu_btn">Subscribe</button>
       </form>
     </div>
   </div>

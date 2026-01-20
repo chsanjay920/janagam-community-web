@@ -122,7 +122,7 @@
   text-decoration: underline;
 }
 
-.signin-btn {
+.signin-cu_btn {
   padding: 0.75rem 1.5rem;
   outline: none;
   border: none;
@@ -135,7 +135,7 @@
   width: 100%;
 }
 
-.signin-btn:hover {
+.signin-cu_btn:hover {
   background-color: var(--primary-color-dark);
 }
 

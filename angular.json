@@ -31,9 +31,13 @@
               "src/material-theme.scss",
               "src/styles.css",
               "src/theam.css",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css",
               "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css",
               "https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css"
+            ],
+            "scripts": [
+              "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ]
           },
           "configurations": {

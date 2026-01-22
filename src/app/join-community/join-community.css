@@ -90,3 +90,11 @@ input[readonly] {
   margin-bottom: 10px;
 }
 
+.required {
+  color: red;
+  font-weight: 600;
+}
+
+.text-danger {
+  font-size: 12px;
+}

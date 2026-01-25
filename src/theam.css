@@ -109,9 +109,9 @@ img {
 
 a {
   text-decoration: none;
+  cursor: pointer;
   transition: 0.3s;
 }
-
 ul {
   list-style: none;
 }

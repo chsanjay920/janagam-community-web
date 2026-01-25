@@ -1,0 +1,54 @@
+<div class="login">
+  <div class="login-container">
+    <div class="login-form-section">
+      <div class="login-header">
+        <h2>Create Admin User</h2>
+        <p>Create a new admin credentials</p>
+      </div>
+
+      <div id="loginForm">
+        <form [formGroup]="adminRegistrationForm" (ngSubmit)="onSubmit()" id="loginForm">
+
+        <div class="form-group">
+          <label class="form-label" for="adminName">
+            Admin Name <span class="required">*</span>
+          </label>
+          <div class="input-with-icon">
+            <i class="fas fa-envelope"></i>
+            <input type="text" id="adminName" class="form-control" formControlName="adminName"
+              placeholder="Enter Admin Name">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="adminEmail">Admin Email</label>
+          <div class="input-with-icon">
+            <i class="fas fa-envelope"></i>
+            <input type="text" class="form-control" formControlName="adminEmail" placeholder="Enter Admin Email">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="input-with-icon">
+            <i class="fas fa-key"></i>
+            <input type="password" id="password" class="form-control" formControlName="createPassword"
+              placeholder="Enter your password">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="cpassword">Confirm Password</label>
+          <div class="input-with-icon">
+            <i class="fas fa-key"></i>
+
+            <input type="password" id="cpassword" class="form-control" formControlName="confirmPassword"
+              placeholder="Confirm your password">
+          </div>
+        </div>
+        <button class="signin-cu_btn" type="submit">Submit</button>
+        <!-- <button class="signin-cu_btn-secondary mt-3" (click)="redirect('dashboad')">Back to Dashboard</button> -->
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -4,7 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-admin-states',
   imports: [],
   templateUrl: './admin-states.html',
-  styleUrl: './admin-states.css',
 })
 export class AdminStates {
 

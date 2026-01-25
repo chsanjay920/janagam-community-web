@@ -1,0 +1,29 @@
+<div class="card">
+  <div class="img m-3">
+    <div class="circle" style="width: 50px">
+      @if (dialogData.dialogType == "Success") {
+      <img src="../../../assets/verified.gif" alt="" srcset="">
+      }
+      @else if (dialogData.dialogType == "Error") {
+    
+      <img src="../../../assets/close.png" alt="" srcset="">
+      }
+      @else if (dialogData.dialogType == "Warning") {
+      <img src="../../../assets/alarm.gif" alt="" srcset="">
+      }
+      @else {
+      <img src="../../../assets/alarm.gif" alt="" srcset="">
+      }
+    </div>
+  </div>
+  <mat-dialog-content>
+    <h3>{{ dialogData.title }}</h3>
+    <p>{{ dialogData.message }}</p>
+  </mat-dialog-content>
+  @for (item of dialogData.buttons; track $index) { 
+    <mat-dialog-actions align="end">
+      <button class="cu_btn px-5" (click)="dialogData.actions[$index](); closeDialog()">{{ item }}</button>
+    </mat-dialog-actions>
+  }
+    
+</div>

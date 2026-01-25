@@ -4,7 +4,6 @@ import { Layout } from './layout/layout';
 import { PublicPortal } from './public-portal/public-portal';
 import { JoinCommunity } from './join-community/join-community';
 
-
 export const routes: Routes = [
     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     { path: 'dashboard', component: Layout },

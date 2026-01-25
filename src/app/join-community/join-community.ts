@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Registration } from '../models/registration';
+import { ApiService } from '../services/api-service';
+import { DialogService } from '../services/dialog-service';
 
 @Component({
   selector: 'app-join-community',
@@ -9,8 +12,13 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 })
 export class JoinCommunity {
   registrationForm!: FormGroup;
+  body!: Registration;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private apiService: ApiService,
+    private dialogService: DialogService,
+  ) {}
 
   ngOnInit(): void {
     this.registrationForm = this.fb.group({
@@ -39,8 +47,13 @@ export class JoinCommunity {
       street: [''],
       city: [''],
 
+      mandal: [''],
+      taluka: [''],
+      village: [''],
+      villageGroup: [''],
+
       qualification: [''],
-      course: ['']
+      course: [''],
     });
   }
 
@@ -63,9 +76,39 @@ export class JoinCommunity {
   onSubmit(): void {
     if (this.registrationForm.invalid) {
       this.registrationForm.markAllAsTouched();
+      this.dialogService.openDialog({
+        dialogType: 'Error',
+        title: 'Form Error!',
+        message: 'Please correct the errors in the form before submitting.',
+        buttons: ['OK'],
+        actions: [() => {}],
+      });
       return;
     }
-
-    console.log('Form Value:', this.registrationForm.getRawValue());
+    this.body = this.registrationForm.getRawValue();
+    this.apiService.post<Registration>('api/register', this.body).subscribe({
+      next: (response) => {
+        console.log('Registration successful:', response);
+        this.dialogService.openDialog({
+          dialogType: 'Success',
+          title: 'Registration Successful!',
+          message: 'Your registration has been completed successfully.',
+          buttons: ['OK'],
+          actions: [() => {}],
+        });
+        this.registrationForm.reset();
+      },
+      error: (error) => {
+        console.error('Registration failed:', error);
+        this.dialogService.openDialog({
+          dialogType: 'Error',
+          title: 'Registration Failed!',
+          message: 'There was an error submitting your registration. Please try again later.',
+          buttons: ['OK'],
+          actions: [() => {}],
+        });
+      },
+    });
   }
+  openDialog(): void {}
 }

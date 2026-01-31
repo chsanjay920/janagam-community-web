@@ -10,9 +10,12 @@ export class ApiService {
   private baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
-  get<T>(endpoint: string, params?: Record<string, any>): Observable<T> {
+  getwithbody<T>(endpoint: string, params?: Record<string, any>): Observable<T> {
     const httpParams = new HttpParams({ fromObject: params || {} });
     return this.http.get<T>(`${this.baseUrl}/${endpoint}`, { params: httpParams });
+  }
+  get<T>(endpoint: string, params?: HttpParams): Observable<T> {
+    return this.http.get<T>(`${this.baseUrl}/${endpoint}`, { params: params });
   }
 
   post<T>(endpoint: string, body: any): Observable<T> {

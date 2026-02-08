@@ -59,11 +59,11 @@ export class Login {
         });
       },
       error: (error) => {
-        console.error('Registration failed:', error);
+        console.error('Login failed:', error);
         this.dialogService.openDialog({
           dialogType: 'Error',
-          title: 'Registration Failed!',
-          message: 'There was an error submitting your registration. Please try again later.',
+          title: 'Login Failed!',
+          message: 'There was an error logging in. Please try again later.',
           buttons: ['OK'],
           actions: [() => {}],
         });

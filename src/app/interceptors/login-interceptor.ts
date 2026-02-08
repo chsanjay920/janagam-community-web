@@ -13,15 +13,15 @@ export const loginInterceptor: HttpInterceptorFn = (req, next) => {
         Authorization: `Bearer ${authToken}`,
       },
     });
+    return next(authReq).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401 || error.status === 403) {
+          router.navigate(['/dashboard']);
+        }
+        sessionStorage.removeItem('token');
+        return throwError(() => new Error(error.message));
+      }),
+    );
   }
-  return next(authReq).pipe(
-    catchError((error: HttpErrorResponse) => {
-      if (error.status === 401 || error.status === 403) {
-        router.navigate(['/dashboard']);
-      }
-      sessionStorage.removeItem('token');
-      return throwError(() => new Error(error.message));
-    }),
-  );
   return next(req);
 };

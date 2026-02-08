@@ -6,7 +6,7 @@
       <input matInput (keyup)="applyFilter($event)" placeholder="Search Registrations">
     </mat-form-field>
   </div>
-  @if (loading == true) {
+  @if (loading) {
   <div class="loader-container">
     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
   </div>

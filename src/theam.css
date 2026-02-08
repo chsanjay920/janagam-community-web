@@ -8,7 +8,7 @@
   --text-light: #737373;
   --extra-light: #f3f4f6;
   --white: #ffffff;
-  --max-width: 1600px;
+  --max-width: 1450px;
 }
 
 * {
@@ -122,9 +122,6 @@ body {
 
 }
 
-body {
-  font-family: 'DM Sans', sans-serif;
-}
 
 nav {
   position: fixed;

@@ -9,7 +9,10 @@ import { HttpParams } from '@angular/common/http';
 import { ApiService } from '../../../services/api-service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { CommonModule } from '@angular/common';
-
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
+import { DialogService } from '../../../services/dialog-service';
 export interface PeriodicElement {
   registrationId: string;
   firstName: string;
@@ -50,19 +53,24 @@ export interface PeriodicElement {
     MatFormFieldModule,
     MatInputModule,
     MatProgressBarModule,
+    MatTableModule,
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
     CommonModule,
   ],
   templateUrl: './admin-list-registrations.html',
 })
 export class AdminListRegistrations implements OnInit {
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService,private dialogService: DialogService) {}
 
   displayedColumns: string[] = [
+    'actions',
     'Name',
+    'status',
     'address',
     'gender',
     'dob',
-    'status',
     'maritalStatus',
     'mobile',
     'email',
@@ -87,7 +95,6 @@ export class AdminListRegistrations implements OnInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-
   ngOnInit() {
     this.loadData();
 
@@ -173,5 +180,87 @@ export class AdminListRegistrations implements OnInit {
       default:
         return '';
     }
+  }
+  onActionClick(action: string, row: any): void {
+    console.log(`Action: ${action}, Row:`, row);
+    switch (action) {
+      case 'View':
+        this.viewDetails(row._id);
+        break;
+      case 'Approve':
+        this.approveRegistration(row._id);
+        break;
+      case 'Reject':
+        this.rejectRegistration(row._id);
+        break;
+    }
+  }
+  approveRegistration(registrationId: string): void {
+    this.apiService.post<any>('api/admin/registration/approve/' + registrationId, null).subscribe({
+      next: (res) => {
+        console.log('Registration approved:', res);
+        this.loading = false;
+        this.loadData();
+        this.dialogService.openDialog({
+          dialogType: 'Success',
+          title: 'Registration Approved!',
+          message: 'Registration approved successfully.',
+          buttons: ['OK'],
+          actions: [
+            () => {
+            },
+          ],
+        });
+      },
+      error: () => {
+        this.loading = false;
+        this.loadData();
+         this.dialogService.openDialog({
+          dialogType: 'Error',
+          title: 'Failed to Approve Registration!',
+          message: 'Failed to approve registration. Please try again.',
+          buttons: ['OK'],
+          actions: [
+            () => {
+            },
+          ],
+        });
+      }
+    });
+  }
+  rejectRegistration(registrationId: string): void {
+    this.apiService.post<any>('api/admin/registration/reject/' + registrationId, null).subscribe({
+      next: (res) => {
+        console.log('Registration rejected:', res);
+        this.loading = false;
+        this.loadData();
+        this.dialogService.openDialog({
+          dialogType: 'Success',
+          title: 'Registration Rejected!',
+          message: 'Registration rejected successfully.',
+          buttons: ['OK'],
+          actions: [
+            () => {
+            },
+          ],
+        });
+      },
+      error: () => {
+        this.loading = false;
+        this.loadData();
+         this.dialogService.openDialog({
+          dialogType: 'Error',
+          title: 'Failed to Reject Registration!',
+          message: 'Failed to reject registration. Please try again.',
+          buttons: ['OK'],
+          actions: [
+            () => {
+            },
+          ],
+        });
+      }
+    });
+  }
+  viewDetails(registrationId: string): void {
   }
 }

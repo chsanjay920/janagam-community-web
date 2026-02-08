@@ -11,7 +11,8 @@ export class DialogHelper {
   readonly dialog = inject(MatDialog);
   dialogData : DialogData = inject(MAT_DIALOG_DATA);
   closeDialog()
-  { 
+  {
+    console.log('Dialog closed');
     this.dialog.closeAll();
   }
 }

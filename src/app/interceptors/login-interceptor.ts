@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
 
 export const loginInterceptor: HttpInterceptorFn = (req, next) => {
-  const authToken = sessionStorage.getItem('token');
+  const authToken = sessionStorage.getItem('authToken');
   const router = inject(Router);
   let authReq = req;
   if (authToken) {

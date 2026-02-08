@@ -1,7 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { MatPaginator, PageEvent, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { debounceTime, Subject } from 'rxjs';
@@ -45,8 +45,7 @@ export class AdminListRegistrations implements OnInit {
   displayedColumns: string[] = [
     'actions','name','status','address','gender','dob','maritalStatus','mobile','email','aadhaar','subCaste','qualification','fatherName','motherName'
   ];
-  data: RegistrationDataModel[] = [];
-
+  dataSource = new MatTableDataSource<RegistrationDataModel>();
   totalRows = 0;
   pageSize = 10;
   pageIndex = 0;
@@ -78,12 +77,11 @@ export class AdminListRegistrations implements OnInit {
     }
     this.apiService.get<any>('api/admin/registrations', params).subscribe({
       next: (res) => {
-        this.data = res.data;
+        this.dataSource.data = res.data;
         this.totalRows = res.count;
         this.loading = false; // hide loader after data is set
       },
       error: () => {
-        this.data = [];
         this.totalRows = 0;
         this.loading = false; // hide loader even on error
       },

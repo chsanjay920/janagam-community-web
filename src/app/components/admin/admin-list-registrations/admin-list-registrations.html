@@ -12,7 +12,7 @@
   </div>
   }
   <div class="table-container">
-    <table mat-table [dataSource]="data" matSort (matSortChange)="onSortChange($event)" class="mat-elevation-z8 full-width-table">
+    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="onSortChange($event)" class="mat-elevation-z8 full-width-table">
 
     <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef>Actions</th>

@@ -1,14 +1,14 @@
 import { Routes } from '@angular/router';
-import { Login } from './login/login';
-import { Layout } from './layout/layout';
-import { PublicPortal } from './public-portal/public-portal';
-import { JoinCommunity } from './join-community/join-community';
-import { CreateAdminUser } from './create-admin-user/create-admin-user';
+import { Login } from './components/public/login/login';
+import { Layout } from './components/public/layout/layout';
+import { PublicPortal } from './components/public/public-portal/public-portal';
 import { AdminPortal } from './components/admin/admin-portal/admin-portal';
 import { AdminListRegistrations } from './components/admin/admin-list-registrations/admin-list-registrations';
 import { AdminStates } from './components/admin/admin-states/admin-states';
 import { AdminProfile } from './components/admin/admin-profile/admin-profile';
 import { authGuard } from './gaurds/auth-guard';
+import { JoinCommunity } from './components/public/join-community/join-community';
+import { CreateAdminUser } from './components/admin/create-admin-user/create-admin-user';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },

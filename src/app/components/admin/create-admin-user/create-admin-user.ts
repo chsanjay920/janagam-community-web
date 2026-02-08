@@ -6,9 +6,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ApiService } from '../services/api-service';
-import { DialogService } from '../services/dialog-service';
-import { AdminRegistration } from '../models/admin-registration';
+import { ApiService } from '../../../services/api-service';
+import { DialogService } from '../../../services/dialog-service';
+import { AdminRegistration } from '../../../models/admin-registration';
 import { Router } from '@angular/router';
 
 @Component({

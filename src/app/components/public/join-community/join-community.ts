@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Registration } from '../models/registration';
-import { ApiService } from '../services/api-service';
-import { DialogService } from '../services/dialog-service';
+import { Registration } from '../../../models/registration';
+import { ApiService } from '../../../services/api-service';
+import { DialogService } from '../../../services/dialog-service';
 
 @Component({
   selector: 'app-join-community',

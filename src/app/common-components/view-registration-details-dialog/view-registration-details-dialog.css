@@ -1,0 +1,5 @@
+.scrollable-modal {
+  max-height: 70vh !important;
+  overflow-y: auto !important;
+  padding-right: 1rem !important;
+}

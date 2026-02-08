@@ -1,0 +1,79 @@
+<div class="modal-content p-3">
+  <div class="modal-header">
+    <h5 class="modal-title">
+      Personal Details
+    </h5>
+    <button type="button" class="btn-close"  aria-label="Close" (click)="closeDialog()"></button>
+  </div>
+  <div class="modal-body scrollable-modal">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <strong>Name:</strong>
+        <p class="text-muted mb-0"> {{ getFullName(dialogData) }}</p>
+      </div>
+
+      <div class="col-md-6">
+        <strong>Status:</strong>
+        <p class="text-muted mb-0"><span [ngClass]="getClass(dialogData.status)">{{ dialogData.status }}</span></p>
+      </div>
+
+      <div class="col-md-12">
+        <strong>Address:</strong>
+        <p class="text-muted mb-0">
+          {{ getFullAddress(dialogData) }}
+        </p>
+      </div>
+
+      <div class="col-md-4">
+        <strong>Gender:</strong>
+        <p class="text-muted mb-0">{{ dialogData.gender }}</p>
+      </div>
+
+      <div class="col-md-4">
+        <strong>Date of Birth:</strong>
+        <p class="text-muted mb-0">{{ dialogData.dob }}</p>
+      </div>
+
+      <div class="col-md-4">
+        <strong>Marital Status:</strong>
+        <p class="text-muted mb-0">{{ dialogData.maritalStatus }}</p>
+      </div>
+
+      <div class="col-md-6">
+        <strong>Mobile:</strong>
+        <p class="text-muted mb-0">{{ dialogData.mobile }}</p>
+      </div>
+
+      <div class="col-md-6">
+        <strong>Email:</strong>
+        <p class="text-muted mb-0">{{ dialogData.email }}</p>
+      </div>
+
+      <div class="col-md-6">
+        <strong>Aadhaar:</strong>
+        <p class="text-muted mb-0">{{ dialogData.aadhaar }}</p>
+      </div>
+
+      <div class="col-md-6">
+        <strong>Sub Caste:</strong>
+        <p class="text-muted mb-0">{{ dialogData.subCaste }} </p>
+      </div>
+
+      <div class="col-md-6">
+        <strong>Qualification:</strong>
+        <p class="text-muted mb-0">{{ dialogData.qualification }}</p>
+      </div>
+
+      <div class="col-md-6">
+        <strong>Father’s Name:</strong>
+        <p class="text-muted mb-0">Mr. {{ dialogData.fatherName }}</p>
+      </div>
+
+      <div class="col-md-6">
+        <strong>Mother’s Name:</strong>
+        <p class="text-muted mb-0">Mrs. {{ dialogData.motherName }}</p>
+      </div>
+      <button class="btn btn-secondary" (click)="closeDialog()">Close</button>
+    </div>
+  </div>
+</div>

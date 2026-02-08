@@ -1,0 +1,29 @@
+export interface RegistrationDataModel {
+  registrationId: string;
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  gender: string;
+  dob: string;
+  age: string;
+  maritalStatus: string;
+  mobile: string;
+  alternateMobile: string;
+  email: string;
+  aadhaar: string;
+  subCaste: string;
+  fatherName: string;
+  fatherOccupation: string;
+  motherName: string;
+  motherOccupation: string;
+  houseNo: string;
+  street: string;
+  city: string;
+  mandal: string;
+  taluka: string;
+  village: string;
+  villageGroup: string;
+  qualification: string;
+  course: string;
+  status: string;
+}

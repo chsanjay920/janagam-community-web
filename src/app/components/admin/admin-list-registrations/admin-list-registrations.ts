@@ -13,35 +13,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { DialogService } from '../../../services/dialog-service';
-export interface PeriodicElement {
-  registrationId: string;
-  firstName: string;
-  middleName: string;
-  lastName: string;
-  gender: string;
-  dob: string;
-  age: string;
-  maritalStatus: string;
-  mobile: string;
-  alternateMobile: string;
-  email: string;
-  aadhaar: string;
-  subCaste: string;
-  fatherName: string;
-  fatherOccupation: string;
-  motherName: string;
-  motherOccupation: string;
-  houseNo: string;
-  street: string;
-  city: string;
-  mandal: string;
-  taluka: string;
-  village: string;
-  villageGroup: string;
-  qualification: string;
-  course: string;
-  status: string;
-}
+import { RegistrationDataModel } from './registration-data-model';
+import { CommonService } from '../../../services/common-service';
+
 
 @Component({
   selector: 'app-admin-list-registrations',
@@ -62,25 +36,16 @@ export interface PeriodicElement {
   templateUrl: './admin-list-registrations.html',
 })
 export class AdminListRegistrations implements OnInit {
-  constructor(private apiService: ApiService,private dialogService: DialogService) {}
+  constructor(
+    private apiService: ApiService,
+    private dialogService: DialogService,
+    private commonService: CommonService
+  ) {}
 
   displayedColumns: string[] = [
-    'actions',
-    'Name',
-    'status',
-    'address',
-    'gender',
-    'dob',
-    'maritalStatus',
-    'mobile',
-    'email',
-    'aadhaar',
-    'subCaste',
-    'qualification',
-    'fatherName',
-    'motherName',
+    'actions','name','status','address','gender','dob','maritalStatus','mobile','email','aadhaar','subCaste','qualification','fatherName','motherName'
   ];
-  data: PeriodicElement[] = [];
+  data: RegistrationDataModel[] = [];
 
   totalRows = 0;
   pageSize = 10;
@@ -97,18 +62,11 @@ export class AdminListRegistrations implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   ngOnInit() {
     this.loadData();
-
-    this.filterSubject.pipe(debounceTime(400)).subscribe((value) => {
-      this.filterValue = value;
-      this.pageIndex = 0;
-      this.loadData();
-    });
   }
 
   loadData() {
     this.loading = true;
     const apiPageNumber = this.pageIndex + 1;
-
     let params = new HttpParams()
       .set('pagenumber', apiPageNumber.toString())
       .set('pagesize', this.pageSize.toString())
@@ -132,22 +90,10 @@ export class AdminListRegistrations implements OnInit {
     });
   }
   getFullName(el: any): string {
-    const names = [el.firstName, el.middleName, el.lastName].filter((name) => !!name);
-    return names.join(', ');
+    return this.commonService.getRegistrantFullName(el);
   }
   getFullAddress(address: any): string {
-    return [
-      address.houseNo,
-      address.street,
-      address.village,
-      address.villageGroup,
-      address.mandal,
-      address.taluka,
-      address.city,
-      address.course,
-    ]
-      .filter(Boolean)
-      .join(', ');
+    return this.commonService.getFullAddress(address);
   }
   onPageChange(event: PageEvent) {
     this.pageIndex = event.pageIndex;
@@ -167,7 +113,9 @@ export class AdminListRegistrations implements OnInit {
 
   applyFilter(event: Event) {
     const value = (event.target as HTMLInputElement).value;
-    this.filterSubject.next(value.trim().toLowerCase());
+    this.filterValue = value.trim().toLowerCase();
+    this.pageIndex = 0;
+    this.loadData();
   }
   getClass(status: string) {
     switch (status) {
@@ -185,7 +133,7 @@ export class AdminListRegistrations implements OnInit {
     console.log(`Action: ${action}, Row:`, row);
     switch (action) {
       case 'View':
-        this.viewDetails(row._id);
+        this.viewDetails(row);
         break;
       case 'Approve':
         this.approveRegistration(row._id);
@@ -206,26 +154,20 @@ export class AdminListRegistrations implements OnInit {
           title: 'Registration Approved!',
           message: 'Registration approved successfully.',
           buttons: ['OK'],
-          actions: [
-            () => {
-            },
-          ],
+          actions: [() => {}],
         });
       },
       error: () => {
         this.loading = false;
         this.loadData();
-         this.dialogService.openDialog({
+        this.dialogService.openDialog({
           dialogType: 'Error',
           title: 'Failed to Approve Registration!',
           message: 'Failed to approve registration. Please try again.',
           buttons: ['OK'],
-          actions: [
-            () => {
-            },
-          ],
+          actions: [() => {}],
         });
-      }
+      },
     });
   }
   rejectRegistration(registrationId: string): void {
@@ -239,28 +181,23 @@ export class AdminListRegistrations implements OnInit {
           title: 'Registration Rejected!',
           message: 'Registration rejected successfully.',
           buttons: ['OK'],
-          actions: [
-            () => {
-            },
-          ],
+          actions: [() => {}],
         });
       },
       error: () => {
         this.loading = false;
         this.loadData();
-         this.dialogService.openDialog({
+        this.dialogService.openDialog({
           dialogType: 'Error',
           title: 'Failed to Reject Registration!',
           message: 'Failed to reject registration. Please try again.',
           buttons: ['OK'],
-          actions: [
-            () => {
-            },
-          ],
+          actions: [() => {}],
         });
-      }
+      },
     });
   }
-  viewDetails(registrationId: string): void {
+  viewDetails(registrationData: any): void {
+    this.dialogService.viewRegistrationDetails(registrationData);
   }
 }

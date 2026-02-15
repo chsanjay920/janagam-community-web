@@ -49,6 +49,11 @@
   </div>
 </header>
 
+@if (loading) {
+<div class="loader-container">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+}
 
 <section class="section__container showcase__container" id="about">
   <div class="showcase__image">
@@ -123,15 +128,15 @@
 
 <section class="section__container banner__container" id="ratings">
   <div class="banner__card">
-    <h4>10+</h4>
+    <h4>{{ usersStates?.ApprovedRegistration }}</h4>
     <p>Members Who Have Joined Us</p>
   </div>
   <div class="banner__card">
-    <h4>12k</h4>
+    <h4>{{ usersStates?.visitorsCount }}</h4>
     <p>Visitors Engaging Daily</p>
   </div>
   <div class="banner__card">
-    <h4>4.8</h4>
+    <h4>{{ usersStates?.AverageRating }}</h4>
     <p>Overrall Ratings</p>
   </div>
 </section>
@@ -196,8 +201,3 @@
     </div>
   </div>
 </footer>
- @if (loading) {
-  <div class="loader-container">
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-  </div>
-  }

@@ -1,13 +1,20 @@
 import { ViewportScroller } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { StarRating } from "../../../common-components/shared/star-rating/star-rating";
+import { StarRating } from '../../../common-components/shared/star-rating/star-rating';
 import { ApiService } from '../../../services/api-service';
 import { DialogService } from '../../../services/dialog-service';
-import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+interface StatesResponse {
+  ApprovedRegistration: number;
+  AverageRating: number;
+  TotalRatings: number;
+  visitorsCount: number;
+}
 
 @Component({
   selector: 'app-layout',
+  standalone: true,
   imports: [StarRating, MatProgressBarModule],
   templateUrl: './layout.html',
 })
@@ -16,13 +23,16 @@ export class Layout implements OnInit {
     private viewportScroller: ViewportScroller,
     private router: Router,
     private apiService: ApiService,
-    private dialogService:DialogService
+    private dialogService: DialogService,
+    private cdr: ChangeDetectorRef
   ) {}
   isMenuOpen: boolean = false;
   productRating = 3;
   loading = false;
+  usersStates!: StatesResponse;
   ngOnInit(): void {
     this.isMenuOpen = false;
+    this.getStates();
   }
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
@@ -59,6 +69,23 @@ export class Layout implements OnInit {
           buttons: ['OK'],
           actions: [() => {}],
         });
+      },
+    });
+  }
+
+  getStates() {
+    this.loading = true;
+    this.apiService.get<StatesResponse>('api/states').subscribe({
+      next: (res) => {
+        console.log('States response:', res);
+        this.loading = false;
+        this.usersStates = res;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        this.loading = false;
+        console.error('States API error:', err);
+        this.cdr.detectChanges();
       },
     });
   }

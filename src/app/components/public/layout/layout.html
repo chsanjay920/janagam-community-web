@@ -1,13 +1,15 @@
 <nav>
   <div class="nav__header">
     <div class="nav__logo">
-      <a href="#" class="logo">Mala Jangam Community </a>
+      <a href="#" class="logo">Mala Jangam Community</a>
     </div>
-    <div class="nav__menu__btn" id="menu-btn">
+
+    <div class="nav__menu__btn" (click)="toggleMenu()">
       <i class="ri-menu-line"></i>
     </div>
   </div>
-  <ul class="nav__links" id="nav-links">
+
+  <ul class="nav__links" [class.open]="isMenuOpen">
     <li><a (click)="scrollToSection('home')">HOME</a></li>
     <li><a (click)="scrollToSection('about')">ABOUT</a></li>
     <li><a (click)="scrollToSection('joinus')">WHY JOIN US</a></li>
@@ -15,12 +17,17 @@
     <li><a (click)="scrollToSection('contact')">CONTACT</a></li>
     <li><a (click)="redirect('explore')">Explore Members</a></li>
   </ul>
+
   <div class="nav__btns">
-    <button class="cu_btn" (click)="redirect('explore')">Explore Members</button>
-    <button class="cu_btn-secondary" style="margin-left: 15px;"
-    (click)="redirect('login')">Login</button>
+    <button class="cu_btn" (click)="redirect('explore')">
+      Explore Members
+    </button>
+    <button class="cu_btn-secondary" style="margin-left: 15px;" (click)="redirect('login')">
+      Login
+    </button>
   </div>
 </nav>
+
 
 <header id="home">
   <div class="header__container">
@@ -50,13 +57,10 @@
   <div class="showcase__content">
     <h4>About the Mala Jangam Online Communtiy</h4>
     <p>
-      This platform is designed to bring together members of the Mala Jangam community from across the world, providing a
-      space to celebrate our culture, share knowledge, and support each other in personal and professional growth.
-    </p>
-    <p>
-      The Mala Jangam online community offers a space to explore its culture and history, connect with members for
-      networking and friendship, stay updated on events and celebrations, join discussions, and find members locally or
-      around the world.
+      The Jangam (or Jangama) is a Shaivite community serving as priests, gurus, and wandering monks, primarily in
+      Andhra Pradesh, Telangana, and Karnataka. Known as "moving lingas" and devotees of Shiva, they traditionally
+      conduct rituals for non-Brahmin Veershaiva households, play musical instruments, and sometimes practice begging
+      for livelihood.
     </p>
     <div class="showcase__btn">
       <button class="cu_btn" (click)="redirect('register')">
@@ -69,34 +73,49 @@
 
 <section class="section__container discover__container" id="joinus">
   <h2 class="section__header">
-    Bringing the Mala Jangam Community Together Like Never Before
+    Key Aspects of the Jangam Community
   </h2>
   <p class="section__description">
-    A Platform to Connect Members, Share Our Stories, and Celebrate the Strength of Our Community
+    While rooted in spiritual traditions, modern economic pressures have led some members to take up other jobs,
+    including street vending, in addition to their traditional priestly functions.
   </p>
   <div class="discover__grid">
     <div class="discover__card">
       <span><i class="ri-camera-lens-line"></i></span>
-      <h4>Connecting Community Members</h4>
+      <h4>Role and Philosophy</h4>
       <p>
-        To bring together Mala Jangam community members from across the globe, fostering communication, networking, and a
-        sense of belonging.
+        They are considered sacred, with their visits to homes seen as a visit by Lord Shiva. They are the custodians of
+        Veerashaiva culture and often act as educators on the teachings of Basava.
       </p>
     </div>
     <div class="discover__card">
       <span><i class="ri-ship-line"></i></span>
-      <h4>Transparency, Accessibility of Details</h4>
+      <h4>Lifestyle</h4>
       <p>
-        To maintain a public directory of members, allowing anyone to view and connect with community members easily and
-        responsibly.
+        Traditionally, they are nomadic, moving in small groups, or village-based priests, though many have transitioned
+        to agriculture or government jobs.
       </p>
     </div>
     <div class="discover__card">
       <span><i class="ri-landscape-line"></i></span>
-      <h4>Showcasing Community’s Strength</h4>
+      <h4>Regional Variations</h4>
       <p>
-        To highlight the unity, achievements, and cultural richness of the Mala Jangam community, strengthening pride and
-        collective identity.
+        In some regions, they are referred to as Jangam Brahmins, holding a high status within the Shaiva sect.
+      </p>
+    </div>
+    <div class="discover__card">
+      <span><i class="ri-parent-fill"></i></span>
+      <h4>Sub-castes</h4>
+      <p>
+        The Budega Jangam (or Beda Jangam) is a notable group, often associated with, and sometimes listed under,
+        Scheduled Castes (SCs) in states like Karnataka.
+      </p>
+    </div>
+    <div class="discover__card">
+      <span><i class="ri-coupon-fill"></i></span>
+      <h4>Cultural Practices</h4>
+      <p>
+        They are known for performing the Veeragase dance and using instruments like the Ganta (bell).
       </p>
     </div>
   </div>
@@ -127,13 +146,13 @@
       </p>
       <ul class="footer__socials">
         <li>
-          <a href="#!"><i class="ri-facebook-fill"></i></a>
+          <a href="https://www.facebook.com/people/Malajangam/61576704044490/"><i class="ri-facebook-fill"></i></a>
         </li>
         <li>
-          <a href="#!"><i class="ri-instagram-line"></i></a>
+          <a href="https://www.instagram.com/madhavi.jangam/"><i class="ri-instagram-line"></i></a>
         </li>
         <li>
-          <a href="#!"><i class="ri-youtube-line"></i></a>
+          <a href="https://www.youtube.com/results?search_query=mala+Jangam"><i class="ri-youtube-line"></i></a>
         </li>
       </ul>
     </div>
@@ -151,29 +170,34 @@
       <h4>Contact Us</h4>
       <ul class="footer__links">
         <li>
-          <a href="#">
-            <span><i class="ri-phone-fill"></i></span>+91 12345 67890
+          <a href="callto:+918374604065">
+            <span><i class="ri-phone-fill"></i></span>+91 8374604065
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="mailto:jangammadhavi3@gmail.com">
             <span><i class="ri-record-mail-line"></i></span>
-            info@Mala Jangamcommunity.com
+            jangammadhavi3@gmail.com
           </a>
         </li>
         <li>
-          <a href="#">
-            <span><i class="ri-map-pin-2-fill"></i></span> Hyderabad, India
+          <a href="https://maps.app.goo.gl/U9KpjkL423Y2Usbq9" target="_blank">
+            <span><i class="ri-map-pin-2-fill"></i></span>BHEL MIG 502032, Hyderabad, India
           </a>
         </li>
       </ul>
     </div>
     <div class="footer__col">
-      <h4>Subscribe</h4>
-      <form action="#!">
-        <input type="text" placeholder="Enter your email" />
-        <button class="cu_btn">Subscribe</button>
-      </form>
+      <h4>Rate Our Service</h4>
+      <app-star-rating [(rating)]="productRating" [maxStars]="5" [readonly]="false" [size]="28">
+      </app-star-rating>
+      <br>
+      <button class="cu_btn mt-2" (click)="submitRating()">Submit Rating</button>
     </div>
   </div>
 </footer>
+ @if (loading) {
+  <div class="loader-container">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+  }

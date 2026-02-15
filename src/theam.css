@@ -78,6 +78,7 @@
   border-radius: 5rem;
   transition: 0.3s;
   cursor: pointer;
+  width: auto;
 }
 .cu_btn-secondary {
   padding: 0.75rem 1.5rem;
@@ -156,7 +157,7 @@ a{
 
 .nav__links {
   position: absolute;
-  bottom: 0;
+  top: 100%;
   left: 0;
   width: 100%;
   padding: 2rem;
@@ -166,13 +167,16 @@ a{
   flex-direction: column;
   gap: 2rem;
   background-color: var(--primary-color);
-  transition: transform 0.5s;
-  z-index: -1;
+  transform: translateY(-150%);
+  transition: transform 0.4s ease;
+  z-index: 8;
 }
 
 .nav__links.open {
-  transform: translateY(100%);
+  transform: translateY(0);
+   background-color: var(--extra-light);
 }
+
 
 .nav__links a {
   font-weight: 400;

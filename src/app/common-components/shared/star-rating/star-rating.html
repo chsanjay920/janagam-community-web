@@ -1,0 +1,24 @@
+<div
+  class="star-rating"
+  [class.readonly]="readonly"
+  role="slider"
+  aria-valuemin="0"
+  [attr.aria-valuemax]="maxStars"
+  [attr.aria-valuenow]="rating"
+>
+  <ng-container *ngFor="let star of [].constructor(maxStars); let i = index; trackBy: trackByIndex">
+    <span
+      class="star"
+      [style.fontSize.px]="size"
+      (click)="setRating(i + 1)"
+      (mouseenter)="setHover(i + 1)"
+      (mouseleave)="clearHover()"
+    >
+      <ng-container [ngSwitch]="getStarFill(i)">
+        <span *ngSwitchCase="'full'">★</span>
+        <span *ngSwitchCase="'half'">☆</span>
+        <span *ngSwitchDefault>☆</span>
+      </ng-container>
+    </span>
+  </ng-container>
+</div>

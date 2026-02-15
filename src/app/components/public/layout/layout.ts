@@ -1,10 +1,13 @@
 import { ViewportScroller } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { StarRating } from '../../../common-components/shared/star-rating/star-rating';
 import { ApiService } from '../../../services/api-service';
 import { DialogService } from '../../../services/dialog-service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { Location } from '@angular/common';
+import { filter } from 'rxjs/operators';
+
 interface StatesResponse {
   ApprovedRegistration: number;
   AverageRating: number;
@@ -24,7 +27,8 @@ export class Layout implements OnInit {
     private router: Router,
     private apiService: ApiService,
     private dialogService: DialogService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private location: Location
   ) {}
   isMenuOpen: boolean = false;
   productRating = 3;
@@ -33,6 +37,12 @@ export class Layout implements OnInit {
   ngOnInit(): void {
     this.isMenuOpen = false;
     this.getStates();
+    this.router.events
+      .pipe(filter((event:any) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        const urlWithoutFragment = this.router.url.split('#')[0];
+        this.location.replaceState(urlWithoutFragment);
+      });
   }
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;

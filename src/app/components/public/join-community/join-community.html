@@ -1,23 +1,30 @@
-<nav>
+<nav style="z-index: 9999;">
   <div class="nav__header">
     <div class="nav__logo">
-      <a href="#" class="logo">Mala Jangam Community </a>
+      <a href="#" class="logo">Mala Jangam Community</a>
     </div>
-    <div class="nav__menu__btn" id="menu-btn">
+
+    <div class="nav__menu__btn" (click)="toggleMenu()">
       <i class="ri-menu-line"></i>
     </div>
   </div>
-  <ul class="nav__links" id="nav-links">
-    <li><a href="#">HOME</a></li>
-    <li><a href="#">ABOUT</a></li>
-    <li><a href="#">WHY JOIN US</a></li>
-    <li><a href="#">RATINGS</a></li>
-    <li><a href="#">CONTACT</a></li>
-    <li><a>Explore Members</a></li>
+
+  <ul class="nav__links" [class.open]="isMenuOpen">
+    <li><a (click)="redirect('dashboard','home')">HOME</a></li>
+    <li><a (click)="redirect('dashboard','about')">ABOUT</a></li>
+    <li><a (click)="redirect('dashboard','joinus')">WHY JOIN US</a></li>
+    <li><a (click)="redirect('dashboard','ratings')">RATINGS</a></li>
+    <li><a (click)="redirect('dashboard','contact')">CONTACT</a></li>
+    <li><a (click)="redirect('explore')">Explore Members</a></li>
   </ul>
+
   <div class="nav__btns">
-    <button class="cu_btn">Explore Members</button>
-    <button class="cu_btn-secondary" style="margin-left: 15px;">Login</button>
+    <button class="cu_btn" (click)="redirect('explore')">
+      Explore Members
+    </button>
+    <button class="cu_btn-secondary" style="margin-left: 15px;" (click)="redirect('login')">
+      Login
+    </button>
   </div>
 </nav>
 
@@ -28,6 +35,11 @@
     </div>
   </div>
 </header>
+@if (loading) {
+<div class="loader-container">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+}
 
 <section class="vertical__section">
   <div class="d-flex">
@@ -74,7 +86,7 @@
               <input type="text" class="form-control" formControlName="firstName">
               <div class="text-danger"
                 *ngIf="registrationForm.get('firstName')?.touched && registrationForm.get('firstName')?.invalid">
-                First Name is required
+                <small *ngIf="registrationForm.get('firstName')?.errors?.['required']">First Name is required</small>
               </div>
             </div>
 
@@ -90,11 +102,10 @@
               <input type="text" class="form-control" formControlName="lastName">
               <div class="text-danger"
                 *ngIf="registrationForm.get('lastName')?.touched && registrationForm.get('lastName')?.invalid">
-                Last Name is required
+                <small *ngIf="registrationForm.get('lastName')?.errors?.['required']">Last Name is required</small>
               </div>
             </div>
           </div>
-
 
           <!-- Gender, DOB, Age -->
           <div class="row g-3 mb-3">
@@ -110,7 +121,7 @@
               </select>
               <div class="text-danger"
                 *ngIf="registrationForm.get('gender')?.touched && registrationForm.get('gender')?.invalid">
-                Gender is required
+                <small *ngIf="registrationForm.get('gender')?.errors?.['required']">Gender is required</small>
               </div>
             </div>
 
@@ -121,7 +132,7 @@
               <input type="date" class="form-control" formControlName="dob" (change)="calculateAge()">
               <div class="text-danger"
                 *ngIf="registrationForm.get('dob')?.touched && registrationForm.get('dob')?.invalid">
-                Date of Birth is required
+                <small *ngIf="registrationForm.get('dob')?.errors?.['required']">Date of Birth is required</small>
               </div>
             </div>
 
@@ -131,13 +142,12 @@
             </div>
           </div>
 
-
           <!-- Contact -->
           <div class="row g-3 mb-3">
             <div class="col-md-4">
               <label class="form-label">Marital Status</label>
               <select class="form-select" formControlName="maritalStatus">
-                <option>Select</option>
+                <option value="">Select</option>
                 <option>Single</option>
                 <option>Married</option>
                 <option>Divorced</option>
@@ -152,16 +162,23 @@
               <input type="tel" class="form-control" formControlName="mobile">
               <div class="text-danger"
                 *ngIf="registrationForm.get('mobile')?.touched && registrationForm.get('mobile')?.invalid">
-                Enter valid 10-digit mobile number
+                <small *ngIf="registrationForm.get('mobile')?.errors?.['required']">Mobile number is required</small>
+                <small *ngIf="registrationForm.get('mobile')?.errors?.['pattern']">Enter valid 10-digit mobile
+                  number</small>
               </div>
             </div>
 
             <div class="col-md-4">
               <label class="form-label">Alternate Mobile</label>
               <input type="tel" class="form-control" formControlName="alternateMobile">
+              <div class="text-danger"
+                *ngIf="registrationForm.get('alternateMobile')?.touched && registrationForm.get('alternateMobile')?.invalid">
+                <small *ngIf="registrationForm.get('alternateMobile')?.errors?.['required']">Alternate mobile number is required</small>
+                <small *ngIf="registrationForm.get('alternateMobile')?.errors?.['pattern']">Enter valid 10-digit alternate mobile
+                  number</small>
+              </div>
             </div>
           </div>
-
 
           <!-- Email & Aadhaar -->
           <div class="row g-3 mb-4">
@@ -172,13 +189,19 @@
               <input type="email" class="form-control" formControlName="email">
               <div class="text-danger"
                 *ngIf="registrationForm.get('email')?.touched && registrationForm.get('email')?.invalid">
-                Enter a valid email
+                <small *ngIf="registrationForm.get('email')?.errors?.['required']">Email is required</small>
+                <small *ngIf="registrationForm.get('email')?.errors?.['email']">Enter a valid email</small>
               </div>
             </div>
 
             <div class="col-md-4">
               <label class="form-label">Aadhaar Number</label>
               <input type="text" class="form-control" formControlName="aadhaar">
+              <div class="text-danger"
+                *ngIf="registrationForm.get('aadhaar')?.touched && registrationForm.get('aadhaar')?.invalid">
+                <small *ngIf="registrationForm.get('aadhaar')?.errors?.['pattern']">Enter valid 12-digit Aadhaar
+                  number</small>
+              </div>
             </div>
 
             <div class="col-md-4">
@@ -186,9 +209,7 @@
               <input type="text" class="form-control" formControlName="subCaste">
             </div>
           </div>
-
-
-          <hr>
+<hr>
 
           <!-- Family Details -->
           <h4 class="mb-3">Family Details</h4>
@@ -279,19 +300,20 @@
               <input type="text" class="form-control" formControlName="course">
             </div>
           </div>
-
+          <!-- The rest of the form stays the same -->
           <div class="text-center">
-            <button type="submit" class="cu_btn px-5">Submit</button>
+            <button type="submit" class="cu_btn px-5">Submit Registration</button>
           </div>
 
         </form>
       </div>
 
+
     </div>
   </div>
 </section>
 
-<footer id="contact">
+<footer>
   <div class="section__container footer__container">
     <div class="footer__col">
       <div class="footer__logo">
@@ -302,13 +324,13 @@
       </p>
       <ul class="footer__socials">
         <li>
-          <a href="#!"><i class="ri-facebook-fill"></i></a>
+          <a href="https://www.facebook.com/people/Malajangam/61576704044490/"><i class="ri-facebook-fill"></i></a>
         </li>
         <li>
-          <a href="#!"><i class="ri-instagram-line"></i></a>
+          <a href="https://www.instagram.com/madhavi.jangam/"><i class="ri-instagram-line"></i></a>
         </li>
         <li>
-          <a href="#!"><i class="ri-youtube-line"></i></a>
+          <a href="https://www.youtube.com/results?search_query=mala+Jangam"><i class="ri-youtube-line"></i></a>
         </li>
       </ul>
     </div>
@@ -318,7 +340,7 @@
 
         <li><a href="#home">Home</a></li>
         <li><a href="#about">About</a></li>
-        <li><a style="cursor: pointer;">Join Us</a></li>
+        <li><a (click)="redirect('register')" style="cursor: pointer;">Join Us</a></li>
         <li><a href="#ratings">Ratings</a></li>
       </ul>
     </div>
@@ -326,29 +348,29 @@
       <h4>Contact Us</h4>
       <ul class="footer__links">
         <li>
-          <a href="#">
-            <span><i class="ri-phone-fill"></i></span>+91 12345 67890
+          <a href="callto:+918374604065">
+            <span><i class="ri-phone-fill"></i></span>+91 8374604065
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="mailto:jangammadhavi3@gmail.com">
             <span><i class="ri-record-mail-line"></i></span>
-            info@Mala Jangamcommunity.com
+            jangammadhavi3@gmail.com
           </a>
         </li>
         <li>
-          <a href="#">
-            <span><i class="ri-map-pin-2-fill"></i></span> Hyderabad, India
+          <a href="https://maps.app.goo.gl/U9KpjkL423Y2Usbq9" target="_blank">
+            <span><i class="ri-map-pin-2-fill"></i></span>BHEL MIG 502032, Hyderabad, India
           </a>
         </li>
       </ul>
     </div>
     <div class="footer__col">
-      <h4>Subscribe</h4>
-      <form action="#!">
-        <input type="text" placeholder="Enter your email" />
-        <button class="cu_btn">Subscribe</button>
-      </form>
+      <h4>Rate Our Service</h4>
+      <app-star-rating [(rating)]="productRating" [maxStars]="5" [readonly]="false" [size]="28">
+      </app-star-rating>
+      <br>
+      <button class="cu_btn mt-2" (click)="submitRating()">Submit Rating</button>
     </div>
   </div>
 </footer>

@@ -3,21 +3,29 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Registration } from '../../../models/registration';
 import { ApiService } from '../../../services/api-service';
 import { DialogService } from '../../../services/dialog-service';
+import { Router } from '@angular/router';
+import { StarRating } from '../../../common-components/shared/star-rating/star-rating';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-join-community',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, StarRating, MatProgressBarModule,CommonModule],
   templateUrl: './join-community.html',
   styleUrl: './join-community.css',
 })
 export class JoinCommunity {
   registrationForm!: FormGroup;
   body!: Registration;
+  isMenuOpen: boolean = false;
+  loading = false;
+  productRating = 3;
 
   constructor(
     private fb: FormBuilder,
     private apiService: ApiService,
     private dialogService: DialogService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -32,7 +40,7 @@ export class JoinCommunity {
 
       maritalStatus: [''],
       mobile: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
-      alternateMobile: [''],
+      alternateMobile: ['',[Validators.pattern('^[0-9]{10}$')]],
 
       email: ['', [Validators.required, Validators.email]],
       aadhaar: ['', [Validators.pattern('^[0-9]{12}$')]],
@@ -46,7 +54,6 @@ export class JoinCommunity {
       houseNo: [''],
       street: [''],
       city: [''],
-
       mandal: [''],
       taluka: [''],
       village: [''],
@@ -111,4 +118,37 @@ export class JoinCommunity {
     });
   }
   openDialog(): void {}
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+  redirect(route: string, fragment: string = '') {
+    this.isMenuOpen = false;
+    this.router.navigate([route], { fragment: fragment });
+  }
+  submitRating() {
+    this.loading = true;
+    this.apiService.post<any>('api/submitrating', { rating: this.productRating }).subscribe({
+      next: (res) => {
+        console.log('Rating submitted:', res);
+        this.loading = false;
+        this.dialogService.openDialog({
+          dialogType: 'Success',
+          title: 'Rating Submitted!',
+          message: 'Your rating has been submitted successfully.',
+          buttons: ['OK'],
+          actions: [() => {}],
+        });
+      },
+      error: () => {
+        this.loading = false;
+        this.dialogService.openDialog({
+          dialogType: 'Error',
+          title: 'Failed to Submit Rating!',
+          message: 'Failed to submit rating. Please try again.',
+          buttons: ['OK'],
+          actions: [() => {}],
+        });
+      },
+    });
+  }
 }

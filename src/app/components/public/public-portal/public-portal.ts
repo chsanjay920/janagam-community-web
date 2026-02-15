@@ -13,6 +13,7 @@ import { CommonService } from '../../../services/common-service';
 import { DialogService } from '../../../services/dialog-service';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-public-portal',
@@ -29,10 +30,12 @@ import { CommonModule } from '@angular/common';
   styleUrl: './public-portal.css',
 })
 export class PublicPortal implements OnInit {
+    isMenuOpen: boolean = false;
   constructor(
     private apiService: ApiService,
     private dialogService: DialogService,
     private commonService: CommonService,
+    private router: Router
   ) {}
   displayedColumns: string[] = [
     'name',
@@ -129,5 +132,12 @@ export class PublicPortal implements OnInit {
     this.sortDirection = sort.direction ? (sort.direction as 'asc' | 'desc') : 'asc';
     this.pageIndex = 0;
     this.loadData();
+  }
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+  redirect(route: string, fragment: string = "") {
+    this.isMenuOpen = false;
+    this.router.navigate([route],{fragment: fragment});
   }
 }

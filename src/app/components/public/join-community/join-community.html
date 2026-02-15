@@ -173,8 +173,10 @@
               <input type="tel" class="form-control" formControlName="alternateMobile">
               <div class="text-danger"
                 *ngIf="registrationForm.get('alternateMobile')?.touched && registrationForm.get('alternateMobile')?.invalid">
-                <small *ngIf="registrationForm.get('alternateMobile')?.errors?.['required']">Alternate mobile number is required</small>
-                <small *ngIf="registrationForm.get('alternateMobile')?.errors?.['pattern']">Enter valid 10-digit alternate mobile
+                <small *ngIf="registrationForm.get('alternateMobile')?.errors?.['required']">Alternate mobile number is
+                  required</small>
+                <small *ngIf="registrationForm.get('alternateMobile')?.errors?.['pattern']">Enter valid 10-digit
+                  alternate mobile
                   number</small>
               </div>
             </div>
@@ -209,7 +211,7 @@
               <input type="text" class="form-control" formControlName="subCaste">
             </div>
           </div>
-<hr>
+          <hr>
 
           <!-- Family Details -->
           <h4 class="mb-3">Family Details</h4>

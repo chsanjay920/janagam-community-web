@@ -1,4 +1,4 @@
-import { ViewportScroller } from '@angular/common';
+import { CommonModule, ViewportScroller } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { StarRating } from '../../../common-components/shared/star-rating/star-rating';
@@ -12,13 +12,13 @@ interface StatesResponse {
   ApprovedRegistration: number;
   AverageRating: number;
   TotalRatings: number;
-  visitorsCount: number;
+  VisitorsCount: number;
 }
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [StarRating, MatProgressBarModule],
+  imports: [StarRating, MatProgressBarModule,CommonModule],
   templateUrl: './layout.html',
 })
 export class Layout implements OnInit {

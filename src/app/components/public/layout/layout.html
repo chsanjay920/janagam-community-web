@@ -127,15 +127,15 @@
 
 <section class="section__container banner__container" id="ratings">
   <div class="banner__card">
-    <h4>{{ usersStates?.ApprovedRegistration }}</h4>
+    <h4>{{ usersStates.ApprovedRegistration  | number:'1.0-0'  }}</h4>
     <p>Members Who Have Joined Us</p>
   </div>
   <div class="banner__card">
-    <h4>{{ usersStates?.visitorsCount }}</h4>
+    <h4>{{ usersStates.VisitorsCount | number:'1.0-0' }}</h4>
     <p>Visitors Engaging Daily</p>
   </div>
   <div class="banner__card">
-    <h4>{{ usersStates?.AverageRating }}</h4>
+    <h4>{{ usersStates.AverageRating }}</h4>
     <p>Overrall Ratings</p>
   </div>
 </section>

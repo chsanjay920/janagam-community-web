@@ -303,6 +303,49 @@
             </div>
           </div>
           <!-- The rest of the form stays the same -->
+          <hr>
+
+          <h4 class="mb-3">Upload Document</h4>
+
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+                  <mat-label>Supporting Document</mat-label>
+
+            <input
+              type="file"
+              hidden
+              #docInput
+              accept=".pdf,.jpg,.jpeg,.png"
+              (change)="onDocumentSelected($event)"
+            />
+
+            <!-- Clickable filename -->
+            <input
+              matInput
+              [value]="selectedDocument?.name || ''"
+              placeholder="Choose file"
+              readonly
+              style="cursor: pointer;"
+              (click)="openDocument()"
+            />
+
+            <!-- Attach icon -->
+            <button
+              mat-icon-button
+              matSuffix
+              type="button"
+              (click)="docInput.click()">
+              <mat-icon>attach_file</mat-icon>
+            </button>
+
+          <small class="text-muted">
+            Allowed: PDF, JPG, PNG (Max 5MB)
+          </small>
+
+            </div>
+          </div>
+
+
           <div class="text-center">
             <button type="submit" class="cu_btn px-5">Submit Registration</button>
           </div>

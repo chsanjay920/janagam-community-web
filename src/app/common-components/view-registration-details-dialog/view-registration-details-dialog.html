@@ -72,7 +72,31 @@
       <div class="col-md-6">
         <strong>Mother’s Name:</strong>
         <p class="text-muted mb-0">Mrs. {{ dialogData.motherName }}</p>
-      </div>
+      </div><div class="col-md-12 mt-4" *ngIf="dialogData.documentId">
+  <strong>Uploaded Document:</strong>
+
+  <!-- Image Preview -->
+  <div class="mt-2">
+    <img
+      [src]="getDocumentUrl()"
+      class="img-fluid rounded border"
+      style="max-height: 250px;"
+      alt="Document Preview"
+      onerror="this.style.display='none'"
+    />
+  </div>
+
+  <!-- Open Button (PDF or fallback) -->
+  <div class="mt-2">
+    <a
+      [href]="getDocumentUrl()"
+      target="_blank"
+      class="btn btn-sm btn-outline-primary">
+      Open Document
+    </a>
+  </div>
+</div>
+
       <button class="btn btn-secondary" (click)="closeDialog()">Close</button>
     </div>
   </div>

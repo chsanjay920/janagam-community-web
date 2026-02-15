@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   MatDialogActions,
   MatDialogContent,
@@ -9,6 +9,8 @@ import { DialogData } from '../../models/dialog-data';
 import { CommonService } from '../../services/common-service';
 import { RegistrationDataModel } from '../../components/admin/admin-list-registrations/registration-data-model';
 import { CommonModule } from '@angular/common';
+import { ApiService } from '../../services/api-service';
+import { environment } from '../../environment';
 
 @Component({
   selector: 'app-view-registration-details-dialog',
@@ -16,10 +18,15 @@ import { CommonModule } from '@angular/common';
   templateUrl: './view-registration-details-dialog.html',
   styles: ['./view-registration-details-dialog.css'],
 })
-export class ViewRegistrationDetailsDialog {
-  constructor(private commonService: CommonService) {}
-  readonly dialog = inject(MatDialog);
+export class ViewRegistrationDetailsDialog  {
+  commonService = inject(CommonService) 
+  dialog = inject(MatDialog);
+  apiService = inject(ApiService);
   dialogData: RegistrationDataModel = inject(MAT_DIALOG_DATA);
+  getDocumentUrl(): string | null {
+  if (!this.dialogData?.documentId) return null;
+  return `${environment.apiUrl}/api/document/${this.dialogData.documentId}`;
+}
   closeDialog() {
     this.dialog.closeAll();
   }

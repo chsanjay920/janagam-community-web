@@ -7,10 +7,12 @@ import { Router } from '@angular/router';
 import { StarRating } from '../../../common-components/shared/star-rating/star-rating';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { CommonModule } from '@angular/common';
+import { MatIcon } from "@angular/material/icon";
+import { MatFormFieldModule } from "@angular/material/form-field";
 
 @Component({
   selector: 'app-join-community',
-  imports: [ReactiveFormsModule, StarRating, MatProgressBarModule,CommonModule],
+  imports: [ReactiveFormsModule, StarRating, MatProgressBarModule,CommonModule, MatIcon, MatFormFieldModule],
   templateUrl: './join-community.html',
   styleUrl: './join-community.css',
 })
@@ -20,6 +22,7 @@ export class JoinCommunity {
   isMenuOpen: boolean = false;
   loading = false;
   productRating = 3;
+selectedDocument!: File | null;
 
   constructor(
     private fb: FormBuilder,
@@ -61,8 +64,27 @@ export class JoinCommunity {
 
       qualification: [''],
       course: [''],
+      documentFile: [null]
     });
   }
+documentPreviewUrl!: string | null;
+
+onDocumentSelected(event: any) {
+  const file = event.target.files[0];
+  if (file) {
+    this.selectedDocument = file;
+
+    // create preview URL
+    this.documentPreviewUrl = URL.createObjectURL(file);
+  }
+}
+
+openDocument() {
+  if (this.documentPreviewUrl) {
+    window.open(this.documentPreviewUrl, '_blank');
+  }
+}
+
 
   calculateAge(): void {
     const dob = this.registrationForm.get('dob')?.value;
@@ -81,42 +103,70 @@ export class JoinCommunity {
   }
 
   onSubmit(): void {
-    if (this.registrationForm.invalid) {
-      this.registrationForm.markAllAsTouched();
+  if (this.registrationForm.invalid) {
+    this.registrationForm.markAllAsTouched();
+    this.dialogService.openDialog({
+      dialogType: 'Error',
+      title: 'Form Error!',
+      message: 'Please correct the errors in the form before submitting.',
+      buttons: ['OK'],
+      actions: [() => {}],
+    });
+    return;
+  }
+
+  // ✅ Create FormData instead of JSON
+  const formData = new FormData();
+
+  const rawValue = this.registrationForm.getRawValue();
+
+  Object.keys(rawValue).forEach(key => {
+    if (rawValue[key] !== null && rawValue[key] !== undefined) {
+      formData.append(key, rawValue[key]);
+    }
+  });
+
+  // ✅ Append document (if selected)
+  if (this.selectedDocument) {
+    formData.append('document', this.selectedDocument);
+  }
+
+  // 🔥 TEMP: log to verify frontend
+  console.log('FormData content:');
+  formData.forEach((value, key) => {
+    console.log(key, value);
+  });
+
+  // ✅ API call
+  this.apiService.post<Registration>('api/register', formData).subscribe({
+    next: (response) => {
+      console.log('Registration successful:', response);
+
       this.dialogService.openDialog({
-        dialogType: 'Error',
-        title: 'Form Error!',
-        message: 'Please correct the errors in the form before submitting.',
+        dialogType: 'Success',
+        title: 'Registration Successful!',
+        message: 'Your registration has been completed successfully.',
         buttons: ['OK'],
         actions: [() => {}],
       });
-      return;
-    }
-    this.body = this.registrationForm.getRawValue();
-    this.apiService.post<Registration>('api/register', this.body).subscribe({
-      next: (response) => {
-        console.log('Registration successful:', response);
-        this.dialogService.openDialog({
-          dialogType: 'Success',
-          title: 'Registration Successful!',
-          message: 'Your registration has been completed successfully.',
-          buttons: ['OK'],
-          actions: [() => {}],
-        });
-        this.registrationForm.reset();
-      },
-      error: (error) => {
-        console.error('Registration failed:', error);
-        this.dialogService.openDialog({
-          dialogType: 'Error',
-          title: 'Registration Failed!',
-          message: 'There was an error submitting your registration. Please try again later.',
-          buttons: ['OK'],
-          actions: [() => {}],
-        });
-      },
-    });
-  }
+
+      this.registrationForm.reset();
+      this.selectedDocument = null;
+    },
+    error: (error) => {
+      console.error('Registration failed:', error);
+
+      this.dialogService.openDialog({
+        dialogType: 'Error',
+        title: 'Registration Failed!',
+        message: 'There was an error submitting your registration. Please try again later.',
+        buttons: ['OK'],
+        actions: [() => {}],
+      });
+    },
+  });
+}
+
   openDialog(): void {}
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
@@ -140,7 +190,7 @@ export class JoinCommunity {
         });
       },
       error: () => {
-        this.loading = false;
+      this.loading = false;
         this.dialogService.openDialog({
           dialogType: 'Error',
           title: 'Failed to Submit Rating!',

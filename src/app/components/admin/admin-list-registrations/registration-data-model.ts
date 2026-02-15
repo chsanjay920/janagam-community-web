@@ -26,4 +26,5 @@ export interface RegistrationDataModel {
   qualification: string;
   course: string;
   status: string;
+  documentId : any;
 }

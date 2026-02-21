@@ -3,7 +3,7 @@
     <h5 class="modal-title">
       Personal Details
     </h5>
-    <button type="button" class="btn-close"  aria-label="Close" (click)="closeDialog()"></button>
+    <button type="button" class="btn-close" aria-label="Close" (click)="closeDialog()"></button>
   </div>
   <div class="modal-body scrollable-modal">
     <div class="row g-3">
@@ -39,6 +39,11 @@
         <p class="text-muted mb-0">{{ dialogData.maritalStatus }}</p>
       </div>
 
+      <div class="col-md-4">
+        <strong>Ration Card No:</strong>
+        <p class="text-muted mb-0">{{ dialogData.rationCardNo }}</p>
+      </div>
+
       <div class="col-md-6">
         <strong>Mobile:</strong>
         <p class="text-muted mb-0">{{ dialogData.mobile }}</p>
@@ -64,38 +69,47 @@
         <p class="text-muted mb-0">{{ dialogData.qualification }}</p>
       </div>
 
-      <div class="col-md-6">
+      <div class="col-md-4">
         <strong>Father’s Name:</strong>
         <p class="text-muted mb-0">Mr. {{ dialogData.fatherName }}</p>
       </div>
 
-      <div class="col-md-6">
+      <div class="col-md-4">
         <strong>Mother’s Name:</strong>
         <p class="text-muted mb-0">Mrs. {{ dialogData.motherName }}</p>
-      </div><div class="col-md-12 mt-4" *ngIf="dialogData.documentId">
-  <strong>Uploaded Document:</strong>
+      </div>
+      <div class="col-md-4">
+        <strong>Spouse Name:</strong>
+        <p class="text-muted mb-0">Mrs. {{ dialogData.spouseName }}</p>
+      </div>
+      <div class="col-md-4">
+        <strong>Number of Children:</strong>
+        <p class="text-muted mb-0">{{ dialogData.numberOfChildren }}</p>
+      </div>
+      <div class="col-md-4">
+        <strong>Children Names:</strong>
+        <p class="text-muted mb-0">{{ dialogData.childrenNames }}</p>
+      </div>
+      <div class="col-md-6">
+        <strong>Job Description:</strong>
+        <p class="text-muted mb-0">{{ dialogData.jobDescription }}</p>
+      </div>
+      <div class="col-md-12 mt-4" *ngIf="dialogData.documentId">
+        <strong>Uploaded Document:</strong>
 
-  <!-- Image Preview -->
-  <div class="mt-2">
-    <img
-      [src]="getDocumentUrl()"
-      class="img-fluid rounded border"
-      style="max-height: 250px;"
-      alt="Document Preview"
-      onerror="this.style.display='none'"
-    />
-  </div>
+        <!-- Image Preview -->
+        <div class="mt-2">
+          <img [src]="getDocumentUrl()" class="img-fluid rounded border" style="max-height: 250px;"
+            alt="Document Preview" onerror="this.style.display='none'" />
+        </div>
 
-  <!-- Open Button (PDF or fallback) -->
-  <div class="mt-2">
-    <a
-      [href]="getDocumentUrl()"
-      target="_blank"
-      class="btn btn-sm btn-outline-primary">
-      Open Document
-    </a>
-  </div>
-</div>
+        <!-- Open Button (PDF or fallback) -->
+        <div class="mt-2">
+          <a [href]="getDocumentUrl()" target="_blank" class="btn btn-sm btn-outline-primary">
+            Open Document
+          </a>
+        </div>
+      </div>
 
       <button class="btn btn-secondary" (click)="closeDialog()">Close</button>
     </div>

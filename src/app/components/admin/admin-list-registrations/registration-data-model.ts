@@ -27,4 +27,10 @@ export interface RegistrationDataModel {
   course: string;
   status: string;
   documentId : any;
+  rationCardNo: string;
+  spouseName: string;
+  spouseOccupation: string;
+  numberOfChildren: string;
+  childrenNames: string;
+  jobDescription: string;
 }

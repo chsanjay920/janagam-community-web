@@ -18,15 +18,15 @@ import { environment } from '../../environment';
   templateUrl: './view-registration-details-dialog.html',
   styles: ['./view-registration-details-dialog.css'],
 })
-export class ViewRegistrationDetailsDialog  {
-  commonService = inject(CommonService) 
+export class ViewRegistrationDetailsDialog {
+  commonService = inject(CommonService);
   dialog = inject(MatDialog);
   apiService = inject(ApiService);
   dialogData: RegistrationDataModel = inject(MAT_DIALOG_DATA);
   getDocumentUrl(): string | null {
-  if (!this.dialogData?.documentId) return null;
-  return `${environment.apiUrl}/api/document/${this.dialogData.documentId}`;
-}
+    if (!this.dialogData?.documentId) return null;
+    return `${environment.apiUrl}/api/document/${this.dialogData.documentId}`;
+  }
   closeDialog() {
     this.dialog.closeAll();
   }

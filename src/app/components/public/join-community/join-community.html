@@ -91,8 +91,12 @@
             </div>
 
             <div class="col-md-4">
-              <label class="form-label">Middle Name</label>
+              <label class="form-label">Middle Name <span class="required">*</span></label>
               <input type="text" class="form-control" formControlName="middleName">
+              <div class="text-danger"
+                *ngIf="registrationForm.get('middleName')?.touched && registrationForm.get('middleName')?.invalid">
+                <small *ngIf="registrationForm.get('middleName')?.errors?.['required']">Middle Name is required</small>
+              </div>
             </div>
 
             <div class="col-md-4">
@@ -137,15 +141,19 @@
             </div>
 
             <div class="col-md-4">
-              <label class="form-label">Age</label>
+              <label class="form-label">Age <span class="required">*</span></label>
               <input type="number" class="form-control" formControlName="age" readonly>
+              <div class="text-danger"
+                *ngIf="registrationForm.get('age')?.touched && registrationForm.get('age')?.invalid">
+                <small *ngIf="registrationForm.get('age')?.errors?.['required']">Age is required</small>
+              </div>
             </div>
           </div>
 
           <!-- Contact -->
           <div class="row g-3 mb-3">
             <div class="col-md-4">
-              <label class="form-label">Marital Status</label>
+              <label class="form-label">Marital Status <span class="required">*</span></label>
               <select class="form-select" formControlName="maritalStatus">
                 <option value="">Select</option>
                 <option>Single</option>
@@ -153,6 +161,11 @@
                 <option>Divorced</option>
                 <option>Widowed</option>
               </select>
+              <div class="text-danger"
+                *ngIf="registrationForm.get('maritalStatus')?.touched && registrationForm.get('maritalStatus')?.invalid">
+                <small *ngIf="registrationForm.get('maritalStatus')?.errors?.['required']">Marital Status is
+                  required</small>
+              </div>
             </div>
 
             <div class="col-md-4">
@@ -197,43 +210,125 @@
             </div>
 
             <div class="col-md-4">
-              <label class="form-label">Aadhaar Number</label>
+              <label class="form-label">Aadhaar Number <span class="required">*</span></label>
               <input type="text" class="form-control" formControlName="aadhaar">
               <div class="text-danger"
                 *ngIf="registrationForm.get('aadhaar')?.touched && registrationForm.get('aadhaar')?.invalid">
+                <small *ngIf="registrationForm.get('aadhaar')?.errors?.['required']">Aadhaar number is required</small>
                 <small *ngIf="registrationForm.get('aadhaar')?.errors?.['pattern']">Enter valid 12-digit Aadhaar
                   number</small>
               </div>
             </div>
 
             <div class="col-md-4">
-              <label class="form-label">Sub-Caste / Gothram</label>
+              <label class="form-label">Sub-Caste / Gothram <span class="required">*</span></label>
               <input type="text" class="form-control" formControlName="subCaste">
+              <div class="text-danger"
+                *ngIf="registrationForm.get('subCaste')?.touched && registrationForm.get('subCaste')?.invalid">
+                <small *ngIf="registrationForm.get('subCaste')?.errors?.['required']">Sub-Caste / Gothram is
+                  required</small>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="row g-3 mb-4">
+            <div class="col-md-4">
+              <label class="form-label">
+                Ration Card Number <span class="required">*</span>
+              </label>
+              <input type="number" class="form-control" formControlName="rationCardNo">
+              <div class="text-danger"
+                *ngIf="registrationForm.get('rationCardNo')?.touched && registrationForm.get('rationCardNo')?.invalid">
+                <small *ngIf="registrationForm.get('rationCardNo')?.errors?.['required']">Ration Card Number is
+                  required</small>
+              </div>
             </div>
           </div>
+
+
           <hr>
 
           <!-- Family Details -->
           <h4 class="mb-3">Family Details</h4>
           <div class="row g-3 mb-3">
             <div class="col-md-6">
-              <label class="form-label">Father’s Name</label>
+              <label class="form-label">Father’s Name <span class="required">*</span></label>
               <input type="text" class="form-control" formControlName="fatherName">
+              <div class="text-danger"
+                *ngIf="registrationForm.get('fatherName')?.touched && registrationForm.get('fatherName')?.invalid">
+                <small *ngIf="registrationForm.get('fatherName')?.errors?.['required']">Father’s Name is
+                  required</small>
+              </div>
             </div>
             <div class="col-md-6">
-              <label class="form-label">Father’s Occupation</label>
+              <label class="form-label">Father’s Occupation <span class="required">*</span></label>
               <input type="text" class="form-control" formControlName="fatherOccupation">
+              <div class="text-danger"
+                *ngIf="registrationForm.get('fatherOccupation')?.touched && registrationForm.get('fatherOccupation')?.invalid">
+                <small *ngIf="registrationForm.get('fatherOccupation')?.errors?.['required']">Father’s Occupation is
+                  required</small>
+              </div>
             </div>
           </div>
 
           <div class="row g-3 mb-3">
             <div class="col-md-6">
-              <label class="form-label">Mother’s Name</label>
+              <label class="form-label">Mother’s Name <span class="required">*</span></label>
               <input type="text" class="form-control" formControlName="motherName">
+              <div class="text-danger"
+                *ngIf="registrationForm.get('motherName')?.touched && registrationForm.get('motherName')?.invalid">
+                <small *ngIf="registrationForm.get('motherName')?.errors?.['required']">Mother’s Name is
+                  required</small>
+              </div>
             </div>
             <div class="col-md-6">
-              <label class="form-label">Mother’s Occupation</label>
+              <label class="form-label">Mother’s Occupation <span class="required">*</span></label>
               <input type="text" class="form-control" formControlName="motherOccupation">
+              <div class="text-danger"
+                *ngIf="registrationForm.get('motherOccupation')?.touched && registrationForm.get('motherOccupation')?.invalid">
+                <small *ngIf="registrationForm.get('motherOccupation')?.errors?.['required']">Mother’s Occupation is
+                  required</small>
+              </div>
+            </div>
+          </div>
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label class="form-label">Spouse Name <span class="required">*</span></label>
+              <input type="text" class="form-control" formControlName="spouseName">
+              <div class="text-danger"
+                *ngIf="registrationForm.get('spouseName')?.touched && registrationForm.get('spouseName')?.invalid">
+                <small *ngIf="registrationForm.get('spouseName')?.errors?.['required']">Spouse Name is required</small>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Spouse Occupation <span class="required">*</span></label>
+              <input type="text" class="form-control" formControlName="spouseOccupation">
+              <div class="text-danger"
+                *ngIf="registrationForm.get('spouseOccupation')?.touched && registrationForm.get('spouseOccupation')?.invalid">
+                <small *ngIf="registrationForm.get('spouseOccupation')?.errors?.['required']">Spouse Occupation is
+                  required</small>
+              </div>
+            </div>
+          </div>
+          <div class="row g-3 mb-3">
+            <div class="col-md-3">
+              <label class="form-label">Number of Children <span class="required">*</span></label>
+              <input type="number" class="form-control" formControlName="numberOfChildren">
+              <div class="text-danger"
+                *ngIf="registrationForm.get('numberOfChildren')?.touched && registrationForm.get('numberOfChildren')?.invalid">
+                <small *ngIf="registrationForm.get('numberOfChildren')?.errors?.['required']">Number of Children is
+                  required</small>
+              </div>
+            </div>
+            <div class="col-md-9">
+              <label class="form-label">Children Names ( seperated by "," ) <span class="required">*</span></label>
+              <input type="text" class="form-control" formControlName="childrenNames">
+              <div class="text-danger"
+                *ngIf="registrationForm.get('childrenNames')?.touched && registrationForm.get('childrenNames')?.invalid">
+                <small *ngIf="registrationForm.get('childrenNames')?.errors?.['required']">Children Names is
+                  required</small>
+              </div>
             </div>
           </div>
 
@@ -243,41 +338,70 @@
           <h4 class="mb-3">Address Details</h4>
           <div class="row g-3 mb-3">
             <div class="col-md-4">
-              <label class="form-label">House No</label>
+              <label class="form-label">House No <span class="required">*</span></label>
               <input type="text" class="form-control" formControlName="houseNo">
+              <div class="text-danger"
+                *ngIf="registrationForm.get('houseNo')?.touched && registrationForm.get('houseNo')?.invalid">
+                <small *ngIf="registrationForm.get('houseNo')?.errors?.['required']">House No is required</small>
+              </div>
             </div>
             <div class="col-md-4">
-              <label class="form-label">Street</label>
+              <label class="form-label">Street <span class="required">*</span></label>
               <input type="text" class="form-control" formControlName="street">
+              <div class="text-danger"
+                *ngIf="registrationForm.get('street')?.touched && registrationForm.get('street')?.invalid">
+                <small *ngIf="registrationForm.get('street')?.errors?.['required']">Street is required</small>
+              </div>
             </div>
             <div class="col-md-4">
-              <label class="form-label">City</label>
+              <label class="form-label">City <span class="required">*</span></label>
               <input type="text" class="form-control" formControlName="city">
+              <div class="text-danger"
+                *ngIf="registrationForm.get('city')?.touched && registrationForm.get('city')?.invalid">
+                <small *ngIf="registrationForm.get('city')?.errors?.['required']">City is required</small>
+              </div>
             </div>
           </div>
           <div class="row g-3 mb-3">
             <div class="col-md-4">
-              <label class="form-label">Taluka</label>
+              <label class="form-label">Taluka <span class="required">*</span></label>
               <input type="text" class="form-control" formControlName="taluka">
+              <div class="text-danger"
+                *ngIf="registrationForm.get('taluka')?.touched && registrationForm.get('taluka')?.invalid">
+                <small *ngIf="registrationForm.get('taluka')?.errors?.['required']">Taluka is required</small>
+              </div>
             </div>
             <div class="col-md-4">
-              <label class="form-label">Mandal</label>
+              <label class="form-label">Mandal <span class="required">*</span></label>
               <input type="text" class="form-control" formControlName="mandal">
+              <div class="text-danger"
+                *ngIf="registrationForm.get('mandal')?.touched && registrationForm.get('mandal')?.invalid">
+                <small *ngIf="registrationForm.get('mandal')?.errors?.['required']">Mandal is required</small>
+              </div>
             </div>
             <div class="col-md-4">
-              <label class="form-label">Village</label>
+              <label class="form-label">Village <span class="required">*</span></label>
               <input type="text" class="form-control" formControlName="village">
+              <div class="text-danger"
+                *ngIf="registrationForm.get('village')?.touched && registrationForm.get('village')?.invalid">
+                <small *ngIf="registrationForm.get('village')?.errors?.['required']">Village is required</small>
+              </div>
             </div>
           </div>
           <div class="row g-3 mb-3">
             <div class="col-md-6">
-              <label class="form-label">Village Group</label>
+              <label class="form-label">Village Group <span class="required">*</span></label>
               <select class="form-select" formControlName="villageGroup">
                 <option>Group 1</option>
                 <option>Group 2</option>
                 <option>Group 3</option>
                 <option>Other</option>
               </select>
+              <div class="text-danger"
+                *ngIf="registrationForm.get('villageGroup')?.touched && registrationForm.get('villageGroup')?.invalid">
+                <small *ngIf="registrationForm.get('villageGroup')?.errors?.['required']">Village Group is
+                  required</small>
+              </div>
             </div>
           </div>
 
@@ -287,7 +411,7 @@
           <h4 class="mb-3">Education Details</h4>
           <div class="row g-3 mb-4">
             <div class="col-md-6">
-              <label class="form-label">Highest Qualification</label>
+              <label class="form-label">Highest Qualification <span class="required">*</span></label>
               <select class="form-select" formControlName="qualification">
                 <option>SSC</option>
                 <option>Intermediate</option>
@@ -296,10 +420,34 @@
                 <option>PG</option>
                 <option>PhD</option>
               </select>
+              <div class="text-danger"
+                *ngIf="registrationForm.get('qualification')?.touched && registrationForm.get('qualification')?.invalid">
+                <small *ngIf="registrationForm.get('qualification')?.errors?.['required']">Highest Qualification is
+                  required</small>
+              </div>
             </div>
             <div class="col-md-6">
-              <label class="form-label">Course</label>
+              <label class="form-label">Course <span class="required">*</span></label>
               <input type="text" class="form-control" formControlName="course">
+              <div class="text-danger"
+                *ngIf="registrationForm.get('course')?.touched && registrationForm.get('course')?.invalid">
+                <small *ngIf="registrationForm.get('course')?.errors?.['required']">Course is required</small>
+              </div>
+            </div>
+          </div>
+          <!-- The rest of the form stays the same -->
+          <hr>
+          <!-- Education -->
+          <h4 class="mb-3">Job Details</h4>
+          <div class="row g-3 mb-4">
+            <div class="col-md-12">
+              <label class="form-label">Job Description <span class="required">*</span></label>
+              <textarea class="form-control" formControlName="jobDescription" rows="1"></textarea>
+              <div class="text-danger"
+                *ngIf="registrationForm.get('jobDescription')?.touched && registrationForm.get('jobDescription')?.invalid">
+                <small *ngIf="registrationForm.get('jobDescription')?.errors?.['required']">Job Description is
+                  required</small>
+              </div>
             </div>
           </div>
           <!-- The rest of the form stays the same -->
@@ -309,38 +457,22 @@
 
           <div class="row g-3 mb-4">
             <div class="col-md-6">
-                  <mat-label>Supporting Document</mat-label>
+              <mat-label>Supporting Document ( Caste Certificate ) </mat-label>
 
-            <input
-              type="file"
-              hidden
-              #docInput
-              accept=".pdf,.jpg,.jpeg,.png"
-              (change)="onDocumentSelected($event)"
-            />
+              <input type="file" hidden #docInput accept=".pdf,.jpg,.jpeg,.png" (change)="onDocumentSelected($event)" />
 
-            <!-- Clickable filename -->
-            <input
-              matInput
-              [value]="selectedDocument?.name || ''"
-              placeholder="Choose file"
-              readonly
-              style="cursor: pointer;"
-              (click)="openDocument()"
-            />
+              <!-- Clickable filename -->
+              <input matInput [value]="selectedDocument?.name || ''" placeholder="Choose file" readonly
+                style="cursor: pointer;" (click)="openDocument()" />
 
-            <!-- Attach icon -->
-            <button
-              mat-icon-button
-              matSuffix
-              type="button"
-              (click)="docInput.click()">
-              <mat-icon>attach_file</mat-icon>
-            </button>
+              <!-- Attach icon -->
+              <button mat-icon-button matSuffix type="button" (click)="docInput.click()">
+                <mat-icon>attach_file</mat-icon>
+              </button>
 
-          <small class="text-muted">
-            Allowed: PDF, JPG, PNG (Max 5MB)
-          </small>
+              <small class="text-muted">
+                Allowed: PDF, JPG, PNG (Max 5MB)
+              </small>
 
             </div>
           </div>

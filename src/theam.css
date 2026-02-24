@@ -215,6 +215,52 @@ header::before {
   border-radius: 3rem;
   z-index: -1;
 }
+
+.logo-header {
+  margin-top: 5rem;
+  padding-inline: 1rem;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.logo-header::before {
+  position: absolute;
+  content: '';
+  height: 100%;
+  width: calc(100% - 5rem);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-image: url(assets/test.jpeg);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: -1;
+}
+.logo-img-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+.logo-img {
+  height: 200px;
+  width: auto;
+}
+
+@media (max-width: 768px) {
+  .logo-img {
+    height: 100px;
+  }
+  .logo-img-container {
+      margin-top: 100px;
+      margin-bottom: 10px;
+    }
+    header{
+      margin-top: 1rem !important;
+    }
+}
 .header__container {
   display: grid;
 }
@@ -681,6 +727,9 @@ footer {
     background-color: var(--text-dark);
   }
   header {
+    margin-top: 0;
+  }
+  .logo-header {
     margin-top: 0;
   }
   .header__container {

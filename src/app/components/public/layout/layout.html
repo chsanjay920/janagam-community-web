@@ -28,6 +28,10 @@
   </div>
 </nav>
 
+<div id="logo-header" class="logo-img-container">
+  <img class="logo-img" src="../../assets/test.jpeg" alt="">
+</div>
+
 <header id="home">
   <div class="header__container">
     <div class="header__content">
@@ -66,12 +70,6 @@
       conduct rituals for non-Brahmin Veershaiva households, play musical instruments, and sometimes practice begging
       for livelihood.
     </p>
-    <div class="showcase__btn">
-      <button class="cu_btn" (click)="redirect('register')">
-        <!-- Join our vibrant online community. -->
-        <span><i class="ri-arrow-right-line"></i></span>
-      </button>
-    </div>
   </div>
 </section>
 
@@ -127,7 +125,7 @@
 
 <section class="section__container banner__container" id="ratings">
   <div class="banner__card">
-    <h4>{{ usersStates.ApprovedRegistration  | number:'1.0-0'  }}</h4>
+    <h4>{{ usersStates.ApprovedRegistration | number:'1.0-0' }}</h4>
     <p>Members Who Have Joined Us</p>
   </div>
   <div class="banner__card">
@@ -144,7 +142,7 @@
     <div class="footer__col">
       <div class="footer__logo">
         <div style="display: flex; align-items: center;">
-          <img style="width: 50px; margin-right: 5px;" src="assets\1.png"  alt="">
+          <img style="width: 50px; margin-right: 5px;" src="assets\1.png" alt="">
           <a href="#" class="logo">Jangam Community Online</a>
         </div>
       </div>
@@ -152,19 +150,20 @@
         Connecting, Showcasing, and Strengthening the Mala Jangam Community
       </p>
       <div>
-        <h5>Supporters</h5>
-        <div style="line-height: 0px; padding: 15px; display: flex; ">
-          <div>
-            <b>President</b>
-            <p>Parsa Shyam Rao</p>
+        <h5 style="margin-bottom: 10px;">Supporters</h5>
+        <div class="row mt-4" style="line-height: 0px;">
+          <div class="col">
+            <div>
+              <b>President</b>
+              <p>Parsa Shyam Rao</p>
+            </div>
           </div>
-          <div style="margin-left: 20px;">
+          <div class="col">
             <b>General secretary</b>
             <p>Taluka Rajendra</p>
           </div>
         </div>
       </div>
-
       <ul class="footer__socials">
         <li>
           <a href="https://www.facebook.com/people/Malajangam/61576704044490/"><i class="ri-facebook-fill"></i></a>

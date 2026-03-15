@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="login">
+      <div class="login-container">
+        <div class="login-form-section">
+          <div class="login-header">
+            <h2>Update President Name</h2>
+            <p>Update the president's information</p>
+          </div>
+          <div id="loginForm">
+            <form [formGroup]="presindentNameUpdateForm" (ngSubmit)="onPresidentSubmit()" id="loginForm">
+
+              <div class="form-group">
+                <label class="form-label" for="presidentName">
+                  President Name <span class="required">*</span>
+                </label>
+                <div class="input-with-icon">
+                  <i class="fas fa-envelope"></i>
+                  <input type="text" id="presidentName" class="form-control" formControlName="presidentName"
+                    placeholder="Enter President Name">
+                </div>
+              </div>
+              <button class="signin-cu_btn" type="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="col-md-6">
+    <div class="login">
+      <div class="login-container">
+        <div class="login-form-section">
+          <div class="login-header">
+            <h2>Update General Secretary</h2>
+            <p>Update the general secretary's information</p>
+          </div>
+          <div id="loginForm">
+            <form [formGroup]="generalSecretaryUpdateForm" (ngSubmit)="onGeneralSecretarySubmit()" id="loginForm">
+
+              <div class="form-group">
+                <label class="form-label" for="generalSecretaryName">
+                  General Secretary Name <span class="required">*</span>
+                </label>
+                <div class="input-with-icon">
+                  <i class="fas fa-envelope"></i>
+                  <input type="text" id="generalSecretaryName" class="form-control" formControlName="generalSecretaryName"
+                    placeholder="Enter General Secretary Name">
+                </div>
+              </div>
+              <button class="signin-cu_btn" type="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

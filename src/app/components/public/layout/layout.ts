@@ -1,5 +1,5 @@
 import { CommonModule, ViewportScroller } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, StreamingResourceOptions } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { StarRating } from '../../../common-components/shared/star-rating/star-rating';
 import { ApiService } from '../../../services/api-service';
@@ -13,8 +13,12 @@ interface StatesResponse {
   AverageRating: number;
   TotalRatings: number;
   VisitorsCount: number;
+  DashboardData:  DashboardData[];
 }
-
+interface DashboardData{
+  typeCode:string;
+  description:string;
+}
 @Component({
   selector: 'app-layout',
   standalone: true,
@@ -34,6 +38,8 @@ export class Layout implements OnInit {
   productRating = 3;
   loading = false;
   usersStates!: StatesResponse;
+  presidentName!: string | undefined;
+  generalSecretaryName!: string | undefined;
   ngOnInit(): void {
     this.isMenuOpen = false;
     this.getStates();
@@ -90,6 +96,14 @@ export class Layout implements OnInit {
         console.log('States response:', res);
         this.loading = false;
         this.usersStates = res;
+
+        // Extract president and general secretary names from dashboard data
+        const presidentData = this.usersStates.DashboardData.find((item) => item.typeCode === 'PRESIDENT');
+        const generalSecretaryData = this.usersStates.DashboardData.find((item) => item.typeCode === 'GENERAL_SECRETARY');
+
+        this.presidentName = presidentData ? presidentData.description : undefined;
+        this.generalSecretaryName = generalSecretaryData ? generalSecretaryData.description : undefined;
+
         this.cdr.detectChanges();
       },
       error: (err) => {

@@ -3,3 +3,7 @@ export interface AdminRegistration {
   email: string,
   password: string,
 }
+export interface DashboardDataUpdate {
+  description: string,
+  typeCode: 'PRESIDENT' | 'GENERAL_SECRETARY',
+}

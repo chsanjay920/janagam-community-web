@@ -9,6 +9,7 @@ import { AdminProfile } from './components/admin/admin-profile/admin-profile';
 import { authGuard } from './gaurds/auth-guard';
 import { JoinCommunity } from './components/public/join-community/join-community';
 import { CreateAdminUser } from './components/admin/create-admin-user/create-admin-user';
+import { AdminUpdateDashboard } from './components/admin/admin-update-dashboard/admin-update-dashboard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -29,6 +30,7 @@ export const routes: Routes = [
       { path: 'add-admin', component: CreateAdminUser, canActivate: [authGuard] },
       { path: 'admin-states', component: AdminStates, canActivate: [authGuard] },
       { path: 'admin-profile', component: AdminProfile, canActivate: [authGuard] },
+      { path: 'update-dashboard', component: AdminUpdateDashboard, canActivate: [authGuard] }
     ],
   },
   { path: '**', redirectTo: 'dashboard' },

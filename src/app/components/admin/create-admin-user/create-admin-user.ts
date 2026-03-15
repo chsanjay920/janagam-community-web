@@ -122,7 +122,6 @@ export class CreateAdminUser implements OnInit {
         });
       },
       error: (error) => {
-        console.error('Admin Registration failed:', error);
         this.dialogService.openDialog({
           dialogType: 'Error',
           title: 'Admin Registration Failed!',

@@ -12,6 +12,7 @@ export class DialogService {
   openDialog(data:DialogData): void {
     this.dialog.open(DialogHelper, {
       width: '50%',
+      maxHeight: '90vh',
       enterAnimationDuration: "0ms",
       exitAnimationDuration: "0ms",
       data: data
@@ -20,6 +21,7 @@ export class DialogService {
   viewRegistrationDetails(data:DialogData): void {
     this.dialog.open(ViewRegistrationDetailsDialog, {
       width: '80%',
+      maxHeight: '90vh',
       data: data
     });
   }

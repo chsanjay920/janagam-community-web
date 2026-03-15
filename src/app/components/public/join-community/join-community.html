@@ -312,25 +312,33 @@
             </div>
           </div>
           <div class="row g-3 mb-3">
-            <div class="col-md-3">
-              <label class="form-label">Number of Children <span class="required">*</span></label>
-              <input type="number" class="form-control" formControlName="numberOfChildren">
-              <div class="text-danger"
-                *ngIf="registrationForm.get('numberOfChildren')?.touched && registrationForm.get('numberOfChildren')?.invalid">
-                <small *ngIf="registrationForm.get('numberOfChildren')?.errors?.['required']">Number of Children is
-                  required</small>
-              </div>
-            </div>
-            <div class="col-md-9">
-              <label class="form-label">Children Names ( seperated by "," ) <span class="required">*</span></label>
-              <input type="text" class="form-control" formControlName="childrenNames">
-              <div class="text-danger"
-                *ngIf="registrationForm.get('childrenNames')?.touched && registrationForm.get('childrenNames')?.invalid">
-                <small *ngIf="registrationForm.get('childrenNames')?.errors?.['required']">Children Names is
-                  required</small>
-              </div>
-            </div>
-          </div>
+  <div class="col-md-3">
+    <label class="form-label">Number of Children</label>
+    <input type="number" class="form-control"
+           formControlName="numberOfChildren"
+           (change)="generateChildrenFields()">
+  </div>
+</div>
+
+<div formArrayName="children">
+
+  <div class="row g-3 mb-2"
+       *ngFor="let child of children.controls; let i = index"
+       [formGroupName]="i">
+
+    <div class="col-md-6">
+      <label class="form-label">Child Name</label>
+      <input type="text" class="form-control" formControlName="name">
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Highest Qualification</label>
+      <input type="text" class="form-control" formControlName="qualification">
+    </div>
+
+  </div>
+
+</div>
 
           <hr>
 

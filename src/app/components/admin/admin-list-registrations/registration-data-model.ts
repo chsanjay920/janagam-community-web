@@ -31,6 +31,6 @@ export interface RegistrationDataModel {
   spouseName: string;
   spouseOccupation: string;
   numberOfChildren: string;
-  childrenNames: string;
+  children: any;
   jobDescription: string;
 }

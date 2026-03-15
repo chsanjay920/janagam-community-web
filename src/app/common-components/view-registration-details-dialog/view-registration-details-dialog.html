@@ -82,15 +82,17 @@
         <strong>Spouse Name:</strong>
         <p class="text-muted mb-0">Mrs. {{ dialogData.spouseName }}</p>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-12">
         <strong>Number of Children:</strong>
         <p class="text-muted mb-0">{{ dialogData.numberOfChildren }}</p>
       </div>
-      <div class="col-md-4">
-        <strong>Children Names:</strong>
-        <p class="text-muted mb-0">{{ dialogData.childrenNames }}</p>
+      <div class="col-md-6" *ngFor="let child of dialogData.children; let i = index">
+            <strong>Child {{ i + 1 }}</strong><br>
+            Name: {{ child.name }} <br>
+            Qualification: {{ child.qualification }}
       </div>
-      <div class="col-md-6">
+      
+      <div class="col-md-12">
         <strong>Job Description:</strong>
         <p class="text-muted mb-0">{{ dialogData.jobDescription }}</p>
       </div>

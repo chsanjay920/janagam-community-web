@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Registration } from '../../../models/registration';
 import { ApiService } from '../../../services/api-service';
 import { DialogService } from '../../../services/dialog-service';
@@ -66,7 +66,7 @@ export class JoinCommunity {
       spouseName: ['', Validators.required],
       spouseOccupation: ['', Validators.required],
       numberOfChildren: ['', Validators.required],
-      childrenNames: ['', Validators.required],
+      children: this.fb.array([]),
 
       street: ['', Validators.required],
       city: ['', Validators.required],
@@ -114,7 +114,25 @@ export class JoinCommunity {
 
     this.registrationForm.patchValue({ age });
   }
+  get children(): FormArray {
+    return this.registrationForm.get('children') as FormArray;
+  }
+  generateChildrenFields() {
+    const count = this.registrationForm.get('numberOfChildren')?.value || 0;
 
+    const childrenArray = this.registrationForm.get('children') as FormArray;
+
+    childrenArray.clear();
+
+    for (let i = 0; i < count; i++) {
+      childrenArray.push(
+        this.fb.group({
+          name: ['', Validators.required],
+          qualification: ['', Validators.required],
+        }),
+      );
+    }
+  }
   onSubmit(): void {
     if (this.registrationForm.invalid) {
       this.registrationForm.markAllAsTouched();
@@ -133,7 +151,10 @@ export class JoinCommunity {
     const rawValue = this.registrationForm.getRawValue();
 
     Object.keys(rawValue).forEach((key) => {
-      if (rawValue[key] !== null && rawValue[key] !== undefined) {
+      if (key === 'children') {
+        // Convert children array to JSON string
+        formData.append('children', JSON.stringify(rawValue.children));
+      } else if (rawValue[key] !== null && rawValue[key] !== undefined) {
         formData.append(key, rawValue[key]);
       }
     });

@@ -34,3 +34,6 @@ export interface RegistrationDataModel {
   children: any;
   jobDescription: string;
 }
+export interface MobileVerficationDataModel {
+  mobile: string;
+}

@@ -162,3 +162,8 @@ small.text-muted {
   color: #6c757d;
 }
 
+.disabled-content {
+  opacity: 0.5; /* Makes it look disabled */
+  pointer-events: none; /* Prevents click events on the div and its children */
+  cursor: not-allowed; /* Changes cursor to indicate it's not usable */
+}

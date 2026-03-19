@@ -32,3 +32,7 @@ export interface Registration {
   qualification: string,
   course: string,
 }
+export interface RegistrationMobileVerification {
+  mobile: string,
+  otp: string,
+}

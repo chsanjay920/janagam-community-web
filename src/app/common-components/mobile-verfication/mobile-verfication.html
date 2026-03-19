@@ -1,0 +1,42 @@
+<div class="modal-content p-3">
+  <div class="modal-header">
+    <h5 class="modal-title">
+      Verify Mobile Number
+    </h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="closeDialog()"></button>
+  </div>
+
+  <div class="modal-body scrollable-modal">
+    <div class="row g-3">
+
+      <div class="col-md-12">
+        <strong>Mobile:</strong>
+        <p class="text-muted mb-2">{{ dialogData.mobile }}</p>
+      </div>
+
+      <!-- OTP Inputs -->
+      <div class="col-md-12 text-center">
+        <form [formGroup]="otpForm">
+          <div formArrayName="otp" class="d-flex justify-content-center gap-2">
+
+            <input *ngFor="let ctrl of otpControls; let i = index" type="text" maxlength="1"
+              class="form-control text-center otp-box" [formControlName]="i" (keyup)="onKeyUp($event, i)"
+              (keydown.backspace)="onBackspace($event, i)">
+
+          </div>
+        </form>
+      </div>
+
+      <!-- Actions -->
+      <div class="col-md-12 text-center mt-3">
+        <button class="btn btn-primary me-2" (click)="verifyOtp()" [disabled]="otpForm.invalid">
+          Verify
+        </button>
+        <button class="btn btn-secondary" (click)="closeDialog()">
+          Close
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

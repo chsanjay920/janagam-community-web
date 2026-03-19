@@ -30,6 +30,8 @@ export class JoinCommunity {
   loading = false;
   productRating = 3;
   selectedDocument!: File | null;
+  isVerifyButtonDisabled: boolean = true;
+  isMobileVerified: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -50,6 +52,7 @@ export class JoinCommunity {
 
       maritalStatus: ['', Validators.required],
       mobile: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
+      mobileVerficationToken: ['', Validators.required],
       alternateMobile: ['', [Validators.pattern('^[0-9]{10}$')]],
 
       email: ['', [Validators.required, Validators.email]],
@@ -181,6 +184,9 @@ export class JoinCommunity {
         });
 
         this.registrationForm.reset();
+        this.isMobileVerified = false;
+        this.isVerifyButtonDisabled = false;
+        this.registrationForm.get('mobile')?.enable();
         this.selectedDocument = null;
       },
       error: (error) => {
@@ -204,6 +210,38 @@ export class JoinCommunity {
   redirect(route: string, fragment: string = '') {
     this.isMenuOpen = false;
     this.router.navigate([route], { fragment: fragment });
+  }
+  requestVerification(MobileNumber: string) {
+    this.loading = true;
+    this.apiService.post<any>('api/mobileVerificationRequest', { mobileNumber: MobileNumber }).subscribe({
+      next: (res) => {
+        console.log('Verification requested:', res);
+        this.loading = false;
+        const dialogRef = this.dialogService.verificationDialog({
+          mobile: MobileNumber,
+        });
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result) {
+            console.log('Received from dialog:', result);
+            const token = result.token;
+            this.registrationForm.patchValue({ mobileVerficationToken: token });
+            console.log('Token:', token);
+            this.isMobileVerified = true;
+            this.registrationForm.get('mobile')?.disable();
+          }
+        });
+      },
+      error: () => {
+        this.loading = false;
+        this.dialogService.openDialog({
+          dialogType: 'Error',
+          title: 'Failed to Submit Verification!',
+          message: 'Failed to submit verification. Please try again.',
+          buttons: ['OK'],
+          actions: [() => {}],
+        });
+      },
+    });
   }
   submitRating() {
     this.loading = true;
@@ -244,6 +282,9 @@ export class JoinCommunity {
         if (control.errors?.['email']) {
           messages.push(`Please enter a valid email address.`);
         }
+        if (control.errors?.['mobileVerficationToken']) {
+          messages.push(`Please validate your mobile number before submitting.`);
+        }
 
         if (control.errors?.['pattern']) {
           if (key === 'mobile' || key === 'alternateMobile') {
@@ -258,6 +299,24 @@ export class JoinCommunity {
     });
 
     return messages.join('\n');
+  }
+  public verifyMobile() {
+    const mobileNumber = this.registrationForm.get('mobile')?.value;
+    if (!mobileNumber || !/^[0-9]{10}$/.test(mobileNumber)) {
+      this.dialogService.openDialog({
+        dialogType: 'Error',
+        title: 'Invalid Mobile Number!',
+        message: 'Please enter a valid 10-digit mobile number before verification.',
+        buttons: ['OK'],
+        actions: [() => {}],
+      });
+      return;
+    }
+    this.requestVerification(mobileNumber);
+  }
+  checkMobileValidity() {
+    const mobileNumber = this.registrationForm.get('mobile')?.value;
+    this.isVerifyButtonDisabled = !mobileNumber || !/^[0-9]{10}$/.test(mobileNumber);
   }
   private getFieldLabel(controlName: string): string {
     const labels: any = {

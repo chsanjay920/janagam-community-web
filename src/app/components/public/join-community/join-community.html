@@ -172,7 +172,7 @@
               <label class="form-label">
                 Mobile Number <span class="required">*</span>
               </label>
-              <input type="tel" class="form-control" formControlName="mobile">
+              <input type="tel" class="form-control" formControlName="mobile" (input)="checkMobileValidity()">
               <div class="text-danger"
                 *ngIf="registrationForm.get('mobile')?.touched && registrationForm.get('mobile')?.invalid">
                 <small *ngIf="registrationForm.get('mobile')?.errors?.['required']">Mobile number is required</small>
@@ -180,7 +180,20 @@
                   number</small>
               </div>
             </div>
-
+            <div class="col-md-4">
+              @if(!isMobileVerified)
+              {
+                <div class="btn btn-primary mt-4" [class.disabled-content]="isVerifyButtonDisabled"
+                  (click)="!isVerifyButtonDisabled && verifyMobile()">
+                  Verify Mobile
+                </div>
+              }
+              @else{
+                <div class="btn btn-success mt-4 disabled-content">
+                  Mobile Verified
+                </div>
+              }
+            </div>
             <div class="col-md-4">
               <label class="form-label">Alternate Mobile</label>
               <input type="tel" class="form-control" formControlName="alternateMobile">
@@ -312,33 +325,30 @@
             </div>
           </div>
           <div class="row g-3 mb-3">
-  <div class="col-md-3">
-    <label class="form-label">Number of Children</label>
-    <input type="number" class="form-control"
-           formControlName="numberOfChildren"
-           (change)="generateChildrenFields()">
-  </div>
-</div>
+            <div class="col-md-3">
+              <label class="form-label">Number of Children</label>
+              <input type="number" class="form-control" formControlName="numberOfChildren"
+                (change)="generateChildrenFields()">
+            </div>
+          </div>
 
-<div formArrayName="children">
+          <div formArrayName="children">
 
-  <div class="row g-3 mb-2"
-       *ngFor="let child of children.controls; let i = index"
-       [formGroupName]="i">
+            <div class="row g-3 mb-2" *ngFor="let child of children.controls; let i = index" [formGroupName]="i">
 
-    <div class="col-md-6">
-      <label class="form-label">Child Name</label>
-      <input type="text" class="form-control" formControlName="name">
-    </div>
+              <div class="col-md-6">
+                <label class="form-label">Child Name</label>
+                <input type="text" class="form-control" formControlName="name">
+              </div>
 
-    <div class="col-md-6">
-      <label class="form-label">Highest Qualification</label>
-      <input type="text" class="form-control" formControlName="qualification">
-    </div>
+              <div class="col-md-6">
+                <label class="form-label">Highest Qualification</label>
+                <input type="text" class="form-control" formControlName="qualification">
+              </div>
 
-  </div>
+            </div>
 
-</div>
+          </div>
 
           <hr>
 

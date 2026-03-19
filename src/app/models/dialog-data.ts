@@ -5,3 +5,7 @@ export interface DialogData {
   buttons: string[];
   actions: (() => void)[];
 }
+export interface VerificationDialogData  {
+  mobile: string;
+}
+

@@ -33,6 +33,9 @@ export class JoinCommunity {
   isVerifyButtonDisabled: boolean = true;
   isMobileVerified: boolean = false;
 
+  presidentName!: string | undefined;
+  generalSecretaryName!: string | undefined;
+
   constructor(
     private fb: FormBuilder,
     private apiService: ApiService,
@@ -83,6 +86,8 @@ export class JoinCommunity {
       jobDescription: ['', Validators.required],
       documentFile: [null],
     });
+    this.presidentName = sessionStorage.getItem('presidentName') || undefined;
+    this.generalSecretaryName = sessionStorage.getItem('generalSecretaryName') || undefined;
   }
   documentPreviewUrl!: string | null;
 

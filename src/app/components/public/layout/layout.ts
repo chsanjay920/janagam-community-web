@@ -103,7 +103,8 @@ export class Layout implements OnInit {
 
         this.presidentName = presidentData ? presidentData.description : undefined;
         this.generalSecretaryName = generalSecretaryData ? generalSecretaryData.description : undefined;
-
+        sessionStorage.setItem('presidentName', this.presidentName || '');
+        sessionStorage.setItem('generalSecretaryName', this.generalSecretaryName || '');
         this.cdr.detectChanges();
       },
       error: (err) => {

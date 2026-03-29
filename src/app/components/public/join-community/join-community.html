@@ -183,15 +183,15 @@
             <div class="col-md-4">
               @if(!isMobileVerified)
               {
-                <div class="btn btn-primary mt-4" [class.disabled-content]="isVerifyButtonDisabled"
-                  (click)="!isVerifyButtonDisabled && verifyMobile()">
-                  Verify Mobile
-                </div>
+              <div class="btn btn-primary mt-4" [class.disabled-content]="isVerifyButtonDisabled"
+                (click)="!isVerifyButtonDisabled && verifyMobile()">
+                Verify Mobile
+              </div>
               }
               @else{
-                <div class="btn btn-success mt-4 disabled-content">
-                  Mobile Verified
-                </div>
+              <div class="btn btn-success mt-4 disabled-content">
+                Mobile Verified
+              </div>
               }
             </div>
             <div class="col-md-4">
@@ -224,12 +224,14 @@
 
             <div class="col-md-4">
               <label class="form-label">Aadhaar Number <span class="required">*</span></label>
-              <input type="text" class="form-control" formControlName="aadhaar">
+              <input type="text" class="form-control" formControlName="aadhaar" inputmode="numeric" maxlength="12"
+                autocomplete="off">
               <div class="text-danger"
                 *ngIf="registrationForm.get('aadhaar')?.touched && registrationForm.get('aadhaar')?.invalid">
                 <small *ngIf="registrationForm.get('aadhaar')?.errors?.['required']">Aadhaar number is required</small>
-                <small *ngIf="registrationForm.get('aadhaar')?.errors?.['pattern']">Enter valid 12-digit Aadhaar
-                  number</small>
+                <small *ngIf="registrationForm.get('aadhaar')?.errors?.['aadhaarInvalid']">Enter a valid 12-digit
+                  Aadhaar
+                  (UIDAI format and checksum)</small>
               </div>
             </div>
 
@@ -283,6 +285,18 @@
                   required</small>
               </div>
             </div>
+            <div class="col-md-6">
+              <label class="form-label">Father’s Aadhaar Number <span class="required">*</span></label>
+              <input type="text" class="form-control" formControlName="fatherAadhaar" inputmode="numeric" maxlength="12"
+                autocomplete="off">
+              <div class="text-danger"
+                *ngIf="registrationForm.get('fatherAadhaar')?.touched && registrationForm.get('fatherAadhaar')?.invalid">
+                <small *ngIf="registrationForm.get('fatherAadhaar')?.errors?.['required']">Father’s Aadhaar is
+                  required</small>
+                <small *ngIf="registrationForm.get('fatherAadhaar')?.errors?.['aadhaarInvalid']">Enter a valid 12-digit
+                  Aadhaar</small>
+              </div>
+            </div>
           </div>
 
           <div class="row g-3 mb-3">
@@ -302,6 +316,18 @@
                 *ngIf="registrationForm.get('motherOccupation')?.touched && registrationForm.get('motherOccupation')?.invalid">
                 <small *ngIf="registrationForm.get('motherOccupation')?.errors?.['required']">Mother’s Occupation is
                   required</small>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Mother’s Aadhaar Number <span class="required">*</span></label>
+              <input type="text" class="form-control" formControlName="motherAadhaar" inputmode="numeric" maxlength="12"
+                autocomplete="off">
+              <div class="text-danger"
+                *ngIf="registrationForm.get('motherAadhaar')?.touched && registrationForm.get('motherAadhaar')?.invalid">
+                <small *ngIf="registrationForm.get('motherAadhaar')?.errors?.['required']">Mother’s Aadhaar is
+                  required</small>
+                <small *ngIf="registrationForm.get('motherAadhaar')?.errors?.['aadhaarInvalid']">Enter a valid 12-digit
+                  Aadhaar</small>
               </div>
             </div>
           </div>
@@ -325,6 +351,20 @@
             </div>
           </div>
           <div class="row g-3 mb-3">
+            <div class="col-md-12">
+              <label class="form-label">Spouse Aadhaar Number <span class="required">*</span></label>
+              <input type="text" class="form-control" formControlName="spouseAadhaar" inputmode="numeric" maxlength="12"
+                autocomplete="off">
+              <div class="text-danger"
+                *ngIf="registrationForm.get('spouseAadhaar')?.touched && registrationForm.get('spouseAadhaar')?.invalid">
+                <small *ngIf="registrationForm.get('spouseAadhaar')?.errors?.['required']">Spouse Aadhaar is
+                  required</small>
+                <small *ngIf="registrationForm.get('spouseAadhaar')?.errors?.['aadhaarInvalid']">Enter a valid 12-digit
+                  Aadhaar</small>
+              </div>
+            </div>
+          </div>
+          <div class="row g-3 mb-3">
             <div class="col-md-3">
               <label class="form-label">Number of Children</label>
               <input type="number" class="form-control" formControlName="numberOfChildren"
@@ -336,14 +376,31 @@
 
             <div class="row g-3 mb-2" *ngFor="let child of children.controls; let i = index" [formGroupName]="i">
 
-              <div class="col-md-6">
-                <label class="form-label">Child Name</label>
+              <div class="col-md-4">
+                <label class="form-label">Child Name <span class="required">*</span></label>
                 <input type="text" class="form-control" formControlName="name">
+                <div class="text-danger" *ngIf="child.get('name')?.touched && child.get('name')?.invalid">
+                  <small *ngIf="child.get('name')?.errors?.['required']">Name is required</small>
+                </div>
               </div>
 
-              <div class="col-md-6">
-                <label class="form-label">Highest Qualification</label>
+              <div class="col-md-4">
+                <label class="form-label">Highest Qualification <span class="required">*</span></label>
                 <input type="text" class="form-control" formControlName="qualification">
+                <div class="text-danger"
+                  *ngIf="child.get('qualification')?.touched && child.get('qualification')?.invalid">
+                  <small *ngIf="child.get('qualification')?.errors?.['required']">Qualification is required</small>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <label class="form-label">Child Aadhaar Number <span class="required">*</span></label>
+                <input type="text" class="form-control" formControlName="aadhaar" inputmode="numeric" maxlength="12"
+                  autocomplete="off">
+                <div class="text-danger" *ngIf="child.get('aadhaar')?.touched && child.get('aadhaar')?.invalid">
+                  <small *ngIf="child.get('aadhaar')?.errors?.['required']">Aadhaar is required</small>
+                  <small *ngIf="child.get('aadhaar')?.errors?.['aadhaarInvalid']">Enter a valid 12-digit Aadhaar</small>
+                </div>
               </div>
 
             </div>
@@ -382,11 +439,11 @@
           </div>
           <div class="row g-3 mb-3">
             <div class="col-md-4">
-              <label class="form-label">Taluka <span class="required">*</span></label>
-              <input type="text" class="form-control" formControlName="taluka">
+              <label class="form-label">District <span class="required">*</span></label>
+              <input type="text" class="form-control" formControlName="district">
               <div class="text-danger"
-                *ngIf="registrationForm.get('taluka')?.touched && registrationForm.get('taluka')?.invalid">
-                <small *ngIf="registrationForm.get('taluka')?.errors?.['required']">Taluka is required</small>
+                *ngIf="registrationForm.get('district')?.touched && registrationForm.get('district')?.invalid">
+                <small *ngIf="registrationForm.get('district')?.errors?.['required']">District is required</small>
               </div>
             </div>
             <div class="col-md-4">
@@ -403,22 +460,6 @@
               <div class="text-danger"
                 *ngIf="registrationForm.get('village')?.touched && registrationForm.get('village')?.invalid">
                 <small *ngIf="registrationForm.get('village')?.errors?.['required']">Village is required</small>
-              </div>
-            </div>
-          </div>
-          <div class="row g-3 mb-3">
-            <div class="col-md-6">
-              <label class="form-label">Village Group <span class="required">*</span></label>
-              <select class="form-select" formControlName="villageGroup">
-                <option>Group 1</option>
-                <option>Group 2</option>
-                <option>Group 3</option>
-                <option>Other</option>
-              </select>
-              <div class="text-danger"
-                *ngIf="registrationForm.get('villageGroup')?.touched && registrationForm.get('villageGroup')?.invalid">
-                <small *ngIf="registrationForm.get('villageGroup')?.errors?.['required']">Village Group is
-                  required</small>
               </div>
             </div>
           </div>

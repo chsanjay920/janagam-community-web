@@ -1,5 +1,13 @@
-import { Component } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import {
+  AbstractControl,
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { aadhaarValidator } from '../../../validators/aadhaar-validators';
 import { Registration } from '../../../models/registration';
 import { ApiService } from '../../../services/api-service';
 import { DialogService } from '../../../services/dialog-service';
@@ -23,7 +31,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   templateUrl: './join-community.html',
   styleUrl: './join-community.css',
 })
-export class JoinCommunity {
+export class JoinCommunity implements OnInit {
   registrationForm!: FormGroup;
   body!: Registration;
   isMenuOpen: boolean = false;
@@ -59,27 +67,29 @@ export class JoinCommunity {
       alternateMobile: ['', [Validators.pattern('^[0-9]{10}$')]],
 
       email: ['', [Validators.required, Validators.email]],
-      aadhaar: ['', [Validators.required, Validators.pattern('^[0-9]{12}$')]],
+      aadhaar: ['', [Validators.required, aadhaarValidator()]],
       subCaste: ['', Validators.required],
       rationCardNo: ['', Validators.required],
 
       fatherName: ['', Validators.required],
       fatherOccupation: ['', Validators.required],
+      fatherAadhaar: ['', [Validators.required, aadhaarValidator()]],
       motherName: ['', Validators.required],
       motherOccupation: ['', Validators.required],
+      motherAadhaar: ['', [Validators.required, aadhaarValidator()]],
 
       houseNo: ['', Validators.required],
       spouseName: ['', Validators.required],
       spouseOccupation: ['', Validators.required],
+      spouseAadhaar: ['', [Validators.required, aadhaarValidator()]],
       numberOfChildren: ['', Validators.required],
       children: this.fb.array([]),
 
       street: ['', Validators.required],
       city: ['', Validators.required],
+      district: ['', Validators.required],
       mandal: ['', Validators.required],
-      taluka: ['', Validators.required],
       village: ['', Validators.required],
-      villageGroup: ['', Validators.required],
 
       qualification: ['', Validators.required],
       course: ['', Validators.required],
@@ -137,6 +147,7 @@ export class JoinCommunity {
         this.fb.group({
           name: ['', Validators.required],
           qualification: ['', Validators.required],
+          aadhaar: ['', [Validators.required, aadhaarValidator()]],
         }),
       );
     }
@@ -196,11 +207,15 @@ export class JoinCommunity {
       },
       error: (error) => {
         console.error('Registration failed:', error);
-
+        const apiMessage =
+          error?.error?.message ||
+          (typeof error?.error === 'string' ? error.error : null);
         this.dialogService.openDialog({
           dialogType: 'Error',
           title: 'Registration Failed!',
-          message: 'There was an error submitting your registration. Please try again later.',
+          message:
+            apiMessage ||
+            'There was an error submitting your registration. Please try again later.',
           buttons: ['OK'],
           actions: [() => {}],
         });
@@ -276,34 +291,64 @@ export class JoinCommunity {
   }
   private getFormValidationErrors(): string {
     const messages: string[] = [];
-    Object.keys(this.registrationForm.controls).forEach((key) => {
-      const control = this.registrationForm.get(key);
+    this.appendControlErrors(this.registrationForm, '', messages);
+    return [...new Set(messages)].join('\n');
+  }
 
-      if (control && control.invalid && control.touched) {
-        if (control.errors?.['required']) {
-          messages.push(`${this.getFieldLabel(key)} is required.`);
+  private appendControlErrors(control: AbstractControl, path: string, messages: string[]): void {
+    if (control instanceof FormGroup) {
+      Object.keys(control.controls).forEach((key) => {
+        const child = control.get(key);
+        if (child) {
+          const nextPath = path ? `${path}.${key}` : key;
+          this.appendControlErrors(child, nextPath, messages);
         }
+      });
+      return;
+    }
+    if (control instanceof FormArray) {
+      control.controls.forEach((c, i) => {
+        this.appendControlErrors(c, `${path}[${i}]`, messages);
+      });
+      return;
+    }
+    if (!control.touched || !control.invalid) return;
 
-        if (control.errors?.['email']) {
-          messages.push(`Please enter a valid email address.`);
-        }
-        if (control.errors?.['mobileVerficationToken']) {
-          messages.push(`Please validate your mobile number before submitting.`);
-        }
-
-        if (control.errors?.['pattern']) {
-          if (key === 'mobile' || key === 'alternateMobile') {
-            messages.push(`Mobile number must be 10 digits.`);
-          }
-
-          if (key === 'aadhaar') {
-            messages.push(`Aadhaar number must be 12 digits.`);
-          }
-        }
+    if (control.errors?.['required']) {
+      messages.push(`${this.labelForPath(path)} is required.`);
+    }
+    if (control.errors?.['email']) {
+      messages.push('Please enter a valid email address.');
+    }
+    if (control.errors?.['mobileVerficationToken']) {
+      messages.push('Please validate your mobile number before submitting.');
+    }
+    if (control.errors?.['pattern']) {
+      if (path.endsWith('mobile') || path.endsWith('alternateMobile')) {
+        messages.push('Mobile number must be 10 digits.');
       }
-    });
+    }
+    if (control.errors?.['aadhaarInvalid']) {
+      messages.push(
+        `${this.labelForPath(path)} must be a valid 12-digit Aadhaar (UIDAI format and checksum).`,
+      );
+    }
+  }
 
-    return messages.join('\n');
+  private labelForPath(path: string): string {
+    const childMatch = path.match(/^children\[(\d+)\]\.(\w+)$/);
+    if (childMatch) {
+      const n = Number(childMatch[1]) + 1;
+      const f = childMatch[2];
+      const labels: Record<string, string> = {
+        name: `Child ${n} name`,
+        qualification: `Child ${n} qualification`,
+        aadhaar: `Child ${n} Aadhaar number`,
+      };
+      return labels[f] || `Child ${n} ${f}`;
+    }
+    const leaf = path.includes('.') ? path.split('.').pop()! : path;
+    return this.getFieldLabel(leaf);
   }
   public verifyMobile() {
     const mobileNumber = this.registrationForm.get('mobile')?.value;
@@ -339,19 +384,22 @@ export class JoinCommunity {
       rationCardNo: 'Ration Card Number',
       fatherName: 'Father Name',
       fatherOccupation: 'Father Occupation',
+      fatherAadhaar: 'Father Aadhaar Number',
       motherName: 'Mother Name',
       motherOccupation: 'Mother Occupation',
+      motherAadhaar: 'Mother Aadhaar Number',
       houseNo: 'House Number',
       spouseName: 'Spouse Name',
       spouseOccupation: 'Spouse Occupation',
+      spouseAadhaar: 'Spouse Aadhaar Number',
       numberOfChildren: 'Number of Children',
       childrenNames: 'Children Names',
       street: 'Street',
       city: 'City',
+      district: 'District',
       mandal: 'Mandal',
-      taluka: 'Taluka',
       village: 'Village',
-      villageGroup: 'Village Group',
+      mobileVerficationToken: 'Mobile verification',
       qualification: 'Qualification',
       course: 'Course',
       jobDescription: 'Job Description',

@@ -13,11 +13,9 @@ export class CommonService {
       address.houseNo,
       address.street,
       address.village,
-      address.villageGroup,
       address.mandal,
-      address.taluka,
+      address.district,
       address.city,
-      address.course,
     ]
       .filter(Boolean)
       .join(', ');

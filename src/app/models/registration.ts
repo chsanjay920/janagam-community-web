@@ -17,17 +17,19 @@ export interface Registration {
 
   fatherName: string,
   fatherOccupation: string,
+  fatherAadhaar: string,
   motherName: string,
   motherOccupation: string,
+  motherAadhaar: string,
+  spouseAadhaar: string,
 
   houseNo: string,
   street: string,
   city: string,
 
+  district: string,
   mandal: string,
-  taluka: string,
   village: string,
-  villageGroup: string,
 
   qualification: string,
   course: string,

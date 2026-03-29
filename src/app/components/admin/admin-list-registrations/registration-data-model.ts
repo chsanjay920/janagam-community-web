@@ -19,10 +19,12 @@ export interface RegistrationDataModel {
   houseNo: string;
   street: string;
   city: string;
+  district: string;
   mandal: string;
-  taluka: string;
   village: string;
-  villageGroup: string;
+  fatherAadhaar: string;
+  motherAadhaar: string;
+  spouseAadhaar: string;
   qualification: string;
   course: string;
   status: string;

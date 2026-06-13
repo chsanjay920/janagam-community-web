@@ -4,7 +4,6 @@ import { MatSort, Sort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { debounceTime, Subject } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { ApiService } from '../../../services/api-service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -12,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material/select';
 import { DialogService } from '../../../services/dialog-service';
 import { RegistrationDataModel } from './registration-data-model';
 import { CommonService } from '../../../services/common-service';
@@ -26,6 +26,7 @@ import { CommonService } from '../../../services/common-service';
     MatSortModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSelectModule,
     MatProgressBarModule,
     MatTableModule,
     MatButtonModule,
@@ -50,12 +51,18 @@ export class AdminListRegistrations implements OnInit {
   pageSize = 10;
   pageIndex = 0;
   loading = false;
+  statusFilter = '';
+  statusOptions = [
+    { value: '', label: 'All Statuses' },
+    { value: 'PENDING', label: 'Pending' },
+    { value: 'APPROVED', label: 'Approved' },
+    { value: 'REJECTED', label: 'Rejected' },
+  ];
 
   sortActive = 'firstName';
   sortDirection: 'asc' | 'desc' = 'asc';
 
   filterValue = '';
-  filterSubject = new Subject<string>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -74,6 +81,9 @@ export class AdminListRegistrations implements OnInit {
 
     if (this.filterValue) {
       params = params.set('filter', this.filterValue);
+    }
+    if (this.statusFilter) {
+      params = params.set('status', this.statusFilter);
     }
     this.apiService.get<any>('api/admin/registrations', params).subscribe({
       next: (res) => {
@@ -115,6 +125,11 @@ export class AdminListRegistrations implements OnInit {
     this.pageIndex = 0;
     this.loadData();
   }
+  onStatusFilterChange(value: string) {
+    this.statusFilter = value;
+    this.pageIndex = 0;
+    this.loadData();
+  }
   getClass(status: string) {
     switch (status) {
       case 'APPROVED':
@@ -133,13 +148,54 @@ export class AdminListRegistrations implements OnInit {
       case 'View':
         this.viewDetails(row);
         break;
+      case 'Edit':
+        this.editDetails(row);
+        break;
       case 'Approve':
         this.approveRegistration(row._id);
         break;
       case 'Reject':
         this.rejectRegistration(row._id);
         break;
+      case 'Delete':
+        this.confirmDelete(row);
+        break;
     }
+  }
+  confirmDelete(row: any): void {
+    this.dialogService.openDialog({
+      dialogType: 'Warning',
+      title: 'Delete Registration?',
+      message: `This will permanently remove ${this.getFullName(row)} from the Registration List.`,
+      buttons: ['Cancel', 'Delete'],
+      actions: [
+        () => {},
+        () => this.deleteRegistration(row._id),
+      ],
+    });
+  }
+  deleteRegistration(registrationId: string): void {
+    this.apiService.delete<any>(`api/admin/registration/${registrationId}`).subscribe({
+      next: () => {
+        this.loadData();
+        this.dialogService.openDialog({
+          dialogType: 'Success',
+          title: 'Registration Deleted!',
+          message: 'The registration has been deleted successfully.',
+          buttons: ['OK'],
+          actions: [() => {}],
+        });
+      },
+      error: () => {
+        this.dialogService.openDialog({
+          dialogType: 'Error',
+          title: 'Delete Failed!',
+          message: 'Unable to delete the registration. Please try again.',
+          buttons: ['OK'],
+          actions: [() => {}],
+        });
+      },
+    });
   }
   approveRegistration(registrationId: string): void {
     this.apiService.post<any>('api/admin/registration/approve/' + registrationId, null).subscribe({
@@ -197,5 +253,16 @@ export class AdminListRegistrations implements OnInit {
   }
   viewDetails(registrationData: any): void {
     this.dialogService.viewRegistrationDetails(registrationData);
+  }
+  editDetails(registrationData: any): void {
+    const dialogRef = this.dialogService.editRegistration({
+      record: registrationData,
+      mode: 'admin',
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadData();
+      }
+    });
   }
 }

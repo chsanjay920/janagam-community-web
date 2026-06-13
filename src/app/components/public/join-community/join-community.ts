@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -40,6 +40,14 @@ export class JoinCommunity implements OnInit {
   selectedDocument!: File | null;
   isVerifyButtonDisabled: boolean = true;
   isMobileVerified: boolean = false;
+  expandedSections: Record<string, boolean> = {
+    registration: true,
+    family: true,
+    address: true,
+    education: true,
+    job: true,
+    document: true,
+  };
 
   presidentName!: string | undefined;
   generalSecretaryName!: string | undefined;
@@ -49,6 +57,7 @@ export class JoinCommunity implements OnInit {
     private apiService: ApiService,
     private dialogService: DialogService,
     private router: Router,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -66,23 +75,23 @@ export class JoinCommunity implements OnInit {
       mobileVerficationToken: ['', Validators.required],
       alternateMobile: ['', [Validators.pattern('^[0-9]{10}$')]],
 
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.email]],
       aadhaar: ['', [Validators.required, aadhaarValidator()]],
       subCaste: ['', Validators.required],
-      rationCardNo: ['', Validators.required],
+      rationCardNo: [''],
 
-      fatherName: ['', Validators.required],
-      fatherOccupation: ['', Validators.required],
-      fatherAadhaar: ['', [Validators.required, aadhaarValidator()]],
-      motherName: ['', Validators.required],
-      motherOccupation: ['', Validators.required],
-      motherAadhaar: ['', [Validators.required, aadhaarValidator()]],
+      fatherName: [''],
+      fatherOccupation: [''],
+      fatherAadhaar: ['', [aadhaarValidator()]],
+      motherName: [''],
+      motherOccupation: [''],
+      motherAadhaar: ['', [aadhaarValidator()]],
 
       houseNo: ['', Validators.required],
-      spouseName: ['', Validators.required],
-      spouseOccupation: ['', Validators.required],
-      spouseAadhaar: ['', [Validators.required, aadhaarValidator()]],
-      numberOfChildren: ['', Validators.required],
+      spouseName: [''],
+      spouseOccupation: [''],
+      spouseAadhaar: ['', [aadhaarValidator()]],
+      numberOfChildren: [''],
       children: this.fb.array([]),
 
       street: ['', Validators.required],
@@ -91,9 +100,9 @@ export class JoinCommunity implements OnInit {
       mandal: ['', Validators.required],
       village: ['', Validators.required],
 
-      qualification: ['', Validators.required],
-      course: ['', Validators.required],
-      jobDescription: ['', Validators.required],
+      qualification: [''],
+      course: [''],
+      jobDescription: [''],
       documentFile: [null],
     });
     this.presidentName = sessionStorage.getItem('presidentName') || undefined;
@@ -136,7 +145,7 @@ export class JoinCommunity implements OnInit {
     return this.registrationForm.get('children') as FormArray;
   }
   generateChildrenFields() {
-    const count = this.registrationForm.get('numberOfChildren')?.value || 0;
+    const count = Number(this.registrationForm.get('numberOfChildren')?.value || 0);
 
     const childrenArray = this.registrationForm.get('children') as FormArray;
 
@@ -145,9 +154,9 @@ export class JoinCommunity implements OnInit {
     for (let i = 0; i < count; i++) {
       childrenArray.push(
         this.fb.group({
-          name: ['', Validators.required],
-          qualification: ['', Validators.required],
-          aadhaar: ['', [Validators.required, aadhaarValidator()]],
+          name: [''],
+          qualification: [''],
+          aadhaar: ['', [aadhaarValidator()]],
         }),
       );
     }
@@ -233,26 +242,33 @@ export class JoinCommunity implements OnInit {
   }
   requestVerification(MobileNumber: string) {
     this.loading = true;
+    this.cdr.detectChanges();
     this.apiService.post<any>('api/mobileVerificationRequest', { mobileNumber: MobileNumber }).subscribe({
       next: (res) => {
         console.log('Verification requested:', res);
         this.loading = false;
-        const dialogRef = this.dialogService.verificationDialog({
-          mobile: MobileNumber,
-        });
-        dialogRef.afterClosed().subscribe((result) => {
-          if (result) {
-            console.log('Received from dialog:', result);
-            const token = result.token;
-            this.registrationForm.patchValue({ mobileVerficationToken: token });
-            console.log('Token:', token);
-            this.isMobileVerified = true;
-            this.registrationForm.get('mobile')?.disable();
-          }
+        this.cdr.detectChanges();
+        setTimeout(() => {
+          const dialogRef = this.dialogService.verificationDialog({
+            mobile: MobileNumber,
+          });
+          dialogRef.afterClosed().subscribe((result) => {
+            this.loading = false;
+            this.cdr.detectChanges();
+            if (result) {
+              console.log('Received from dialog:', result);
+              const token = result.token;
+              this.registrationForm.patchValue({ mobileVerficationToken: token });
+              console.log('Token:', token);
+              this.isMobileVerified = true;
+              this.registrationForm.get('mobile')?.disable();
+            }
+          });
         });
       },
       error: () => {
         this.loading = false;
+        this.cdr.detectChanges();
         this.dialogService.openDialog({
           dialogType: 'Error',
           title: 'Failed to Submit Verification!',
@@ -265,10 +281,12 @@ export class JoinCommunity implements OnInit {
   }
   submitRating() {
     this.loading = true;
+    this.cdr.detectChanges();
     this.apiService.post<any>('api/submitrating', { rating: this.productRating }).subscribe({
       next: (res) => {
         console.log('Rating submitted:', res);
         this.loading = false;
+        this.cdr.detectChanges();
         this.dialogService.openDialog({
           dialogType: 'Success',
           title: 'Rating Submitted!',
@@ -279,6 +297,7 @@ export class JoinCommunity implements OnInit {
       },
       error: () => {
         this.loading = false;
+        this.cdr.detectChanges();
         this.dialogService.openDialog({
           dialogType: 'Error',
           title: 'Failed to Submit Rating!',
@@ -406,5 +425,9 @@ export class JoinCommunity implements OnInit {
     };
 
     return labels[controlName] || controlName;
+  }
+
+  toggleSection(section: string): void {
+    this.expandedSections[section] = !this.expandedSections[section];
   }
 }

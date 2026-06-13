@@ -203,6 +203,35 @@ mat-form-field {
   margin: 10px 5px 0 0;
 }
 
+.registration-toolbar {
+  margin-bottom: 1rem;
+}
+
+.registration-filters {
+  align-items: flex-end;
+  flex-wrap: nowrap;
+}
+
+.toolbar-field {
+  margin: 0;
+  float: none;
+}
+
+.toolbar-field--search {
+  width: min(360px, 46vw);
+  min-width: 260px;
+}
+
+.toolbar-field--status {
+  width: 180px;
+  min-width: 180px;
+  flex: 0 0 180px;
+}
+
+.toolbar-field--status .mat-mdc-text-field-wrapper {
+  padding-right: 0.5rem;
+}
+
 /* Loader styling */
 .loader-container {
   display: flex;
@@ -213,6 +242,7 @@ mat-form-field {
 .table-container {
   max-height: 700px;   /* adjust as needed */
   overflow-y: auto;
+  overflow-x: auto;
   width: 100%;
   border-radius: 8px;
   background-color: #ffffff;
@@ -235,6 +265,17 @@ mat-form-field {
 
   mat-form-field {
     max-width: 100%;
+  }
+
+  .registration-filters {
+    flex-wrap: wrap;
+  }
+
+  .toolbar-field--search,
+  .toolbar-field--status {
+    width: 100%;
+    min-width: 100%;
+    flex: 1 1 100%;
   }
 }
 
@@ -292,4 +333,117 @@ mat-form-field {
 
 .mat-mdc-cell {
   vertical-align: middle;
+}
+
+td.mat-mdc-cell.mat-column-actions,
+th.mat-mdc-header-cell.mat-column-actions {
+  text-align: center;
+}
+
+button.row-actions-trigger.mat-mdc-icon-button.mat-mdc-button-base,
+button[mat-icon-button].row-actions-trigger {
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px !important;
+  min-height: 38px !important;
+  padding: 0 !important;
+  border: 1px solid rgba(15, 23, 42, 0.12) !important;
+  border-radius: 999px !important;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%) !important;
+  color: #334155 !important;
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+  appearance: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease,
+    color 0.18s ease !important;
+}
+
+button.row-actions-trigger.mat-mdc-icon-button.mat-mdc-button-base:hover,
+button[mat-icon-button].row-actions-trigger:hover {
+  background: linear-gradient(180deg, #ffffff 0%, #eef4ff 100%) !important;
+  color: #1d4ed8 !important;
+  transform: translateY(-1px);
+  box-shadow:
+    0 4px 10px rgba(15, 23, 42, 0.08),
+    0 1px 2px rgba(15, 23, 42, 0.06) !important;
+}
+
+button.row-actions-trigger.mat-mdc-icon-button.mat-mdc-button-base:focus,
+button.row-actions-trigger.mat-mdc-icon-button.mat-mdc-button-base:focus-visible,
+button[mat-icon-button].row-actions-trigger:focus,
+button[mat-icon-button].row-actions-trigger:focus-visible {
+  outline: none !important;
+  box-shadow:
+    0 0 0 3px rgba(40, 135, 255, 0.18),
+    0 1px 2px rgba(15, 23, 42, 0.06) !important;
+}
+
+button.row-actions-trigger .mat-icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  line-height: 18px;
+}
+
+.confirmation-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.25rem 1.25rem 1rem;
+  min-width: min(560px, 92vw);
+}
+
+.confirmation-dialog__icon {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.confirmation-dialog__icon .circle {
+  width: 56px !important;
+  height: 56px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.confirmation-dialog__icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.confirmation-dialog__content {
+  padding: 0.25rem 0 0.5rem;
+  margin: 0;
+}
+
+.confirmation-dialog__content h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #374151;
+}
+
+.confirmation-dialog__content p {
+  margin: 0;
+  color: #6b7280;
+  line-height: 1.5;
+}
+
+.confirmation-dialog__actions {
+  padding: 0.5rem 0 0;
+  margin: 0;
+  gap: 0.75rem;
+}
+
+.confirmation-dialog__button {
+  min-width: 130px;
 }

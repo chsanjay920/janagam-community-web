@@ -14,6 +14,8 @@ import { DialogService } from '../../../services/dialog-service';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-public-portal',
@@ -25,6 +27,8 @@ import { Router } from '@angular/router';
     MatPaginatorModule,
     MatProgressBar,
     CommonModule,
+    MatMenuModule,
+    MatIconModule,
   ],
   templateUrl: './public-portal.html',
   styleUrl: './public-portal.css',
@@ -38,6 +42,7 @@ export class PublicPortal implements OnInit {
     private router: Router
   ) {}
   displayedColumns: string[] = [
+    'actions',
     'name',
     'status',
     'address',
@@ -139,5 +144,32 @@ export class PublicPortal implements OnInit {
   redirect(route: string, fragment: string = "") {
     this.isMenuOpen = false;
     this.router.navigate([route],{fragment: fragment});
+  }
+  onActionClick(action: string, row: any): void {
+    switch (action) {
+      case 'View':
+        this.dialogService.viewRegistrationDetails(row);
+        break;
+      case 'Edit':
+        this.startPublicEdit(row);
+        break;
+    }
+  }
+  startPublicEdit(row: any): void {
+    const verificationRef = this.dialogService.verificationDialog({ mobile: row.mobile });
+    verificationRef.afterClosed().subscribe((result) => {
+      if (result?.token) {
+        const editRef = this.dialogService.editRegistration({
+          record: row,
+          mode: 'public',
+          token: result.token,
+        });
+        editRef.afterClosed().subscribe((updated) => {
+          if (updated) {
+            this.loadData();
+          }
+        });
+      }
+    });
   }
 }

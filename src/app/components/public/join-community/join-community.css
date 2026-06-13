@@ -167,3 +167,31 @@ small.text-muted {
   pointer-events: none; /* Prevents click events on the div and its children */
   cursor: not-allowed; /* Changes cursor to indicate it's not usable */
 }
+
+.section-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.section-toggle h3,
+.section-toggle h4 {
+  margin: 0;
+}
+
+.toggle-btn {
+  border: 0;
+  background: transparent;
+  color: var(--text-dark);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  border-radius: 999px;
+}
+
+.toggle-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+}

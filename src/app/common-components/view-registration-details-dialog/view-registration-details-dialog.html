@@ -1,140 +1,137 @@
 <div class="modal-content p-3">
   <div class="modal-header">
-    <h5 class="modal-title">
-      Personal Details
-    </h5>
+    <h5 class="modal-title">Personal Details</h5>
     <button type="button" class="btn-close" aria-label="Close" (click)="closeDialog()"></button>
   </div>
   <div class="modal-body scrollable-modal">
     <div class="row g-3">
       <div class="col-md-6">
         <strong>Name:</strong>
-        <p class="text-muted mb-0"> {{ getFullName(dialogData) }}</p>
+        <p class="text-muted mb-0">{{ getFullName(dialogData) }}</p>
       </div>
 
-      <div class="col-md-6">
+      <div class="col-md-6" *ngIf="dialogData.status">
         <strong>Status:</strong>
         <p class="text-muted mb-0"><span [ngClass]="getClass(dialogData.status)">{{ dialogData.status }}</span></p>
       </div>
 
-      <div class="col-md-12">
+      <div class="col-md-12" *ngIf="getFullAddress(dialogData)">
         <strong>Address:</strong>
-        <p class="text-muted mb-0">
-          {{ getFullAddress(dialogData) }}
-        </p>
+        <p class="text-muted mb-0">{{ getFullAddress(dialogData) }}</p>
       </div>
 
-      <div class="col-md-4">
+      <div class="col-md-4" *ngIf="dialogData.gender">
         <strong>Gender:</strong>
         <p class="text-muted mb-0">{{ dialogData.gender }}</p>
       </div>
 
-      <div class="col-md-4">
+      <div class="col-md-4" *ngIf="dialogData.dob">
         <strong>Date of Birth:</strong>
         <p class="text-muted mb-0">{{ dialogData.dob }}</p>
       </div>
 
-      <div class="col-md-4">
+      <div class="col-md-4" *ngIf="dialogData.maritalStatus">
         <strong>Marital Status:</strong>
         <p class="text-muted mb-0">{{ dialogData.maritalStatus }}</p>
       </div>
 
-      <div class="col-md-4">
+      <div class="col-md-4" *ngIf="dialogData.rationCardNo">
         <strong>Ration Card No:</strong>
         <p class="text-muted mb-0">{{ dialogData.rationCardNo }}</p>
       </div>
 
-      <div class="col-md-6">
+      <div class="col-md-6" *ngIf="dialogData.mobile">
         <strong>Mobile:</strong>
         <p class="text-muted mb-0">{{ dialogData.mobile }}</p>
       </div>
 
-      <div class="col-md-6">
+      <div class="col-md-6" *ngIf="dialogData.email">
         <strong>Email:</strong>
         <p class="text-muted mb-0">{{ dialogData.email }}</p>
       </div>
 
-      <div class="col-md-6">
+      <div class="col-md-6" *ngIf="dialogData.aadhaar">
         <strong>Aadhaar:</strong>
         <p class="text-muted mb-0">{{ dialogData.aadhaar }}</p>
       </div>
 
-      <div class="col-md-6">
+      <div class="col-md-6" *ngIf="dialogData.district">
         <strong>District:</strong>
         <p class="text-muted mb-0">{{ dialogData.district }}</p>
       </div>
 
-      <div class="col-md-6">
-        <strong>Father’s Aadhaar:</strong>
+      <div class="col-md-6" *ngIf="dialogData.fatherAadhaar">
+        <strong>Father's Aadhaar:</strong>
         <p class="text-muted mb-0">{{ dialogData.fatherAadhaar }}</p>
       </div>
 
-      <div class="col-md-6">
-        <strong>Mother’s Aadhaar:</strong>
+      <div class="col-md-6" *ngIf="dialogData.motherAadhaar">
+        <strong>Mother's Aadhaar:</strong>
         <p class="text-muted mb-0">{{ dialogData.motherAadhaar }}</p>
       </div>
 
-      <div class="col-md-6">
+      <div class="col-md-6" *ngIf="dialogData.spouseAadhaar">
         <strong>Spouse Aadhaar:</strong>
         <p class="text-muted mb-0">{{ dialogData.spouseAadhaar }}</p>
       </div>
 
-      <div class="col-md-6">
+      <div class="col-md-6" *ngIf="dialogData.subCaste">
         <strong>Sub Caste:</strong>
-        <p class="text-muted mb-0">{{ dialogData.subCaste }} </p>
+        <p class="text-muted mb-0">{{ dialogData.subCaste }}</p>
       </div>
 
-      <div class="col-md-6">
+      <div class="col-md-6" *ngIf="dialogData.qualification">
         <strong>Qualification:</strong>
         <p class="text-muted mb-0">{{ dialogData.qualification }}</p>
       </div>
 
-      <div class="col-md-4">
-        <strong>Father’s Name:</strong>
-        <p class="text-muted mb-0">Mr. {{ dialogData.fatherName }}</p>
+      <div class="col-md-4" *ngIf="dialogData.fatherName">
+        <strong>Father's Name:</strong>
+        <p class="text-muted mb-0">{{ dialogData.fatherName }}</p>
       </div>
 
-      <div class="col-md-4">
-        <strong>Mother’s Name:</strong>
-        <p class="text-muted mb-0">Mrs. {{ dialogData.motherName }}</p>
+      <div class="col-md-4" *ngIf="dialogData.motherName">
+        <strong>Mother's Name:</strong>
+        <p class="text-muted mb-0">{{ dialogData.motherName }}</p>
       </div>
-      <div class="col-md-4">
+
+      <div class="col-md-4" *ngIf="dialogData.spouseName">
         <strong>Spouse Name:</strong>
-        <p class="text-muted mb-0">Mrs. {{ dialogData.spouseName }}</p>
+        <p class="text-muted mb-0">{{ dialogData.spouseName }}</p>
       </div>
-      <div class="col-md-12">
+
+      <div class="col-md-12" *ngIf="dialogData.numberOfChildren !== null && dialogData.numberOfChildren !== undefined && dialogData.numberOfChildren !== ''">
         <strong>Number of Children:</strong>
         <p class="text-muted mb-0">{{ dialogData.numberOfChildren }}</p>
       </div>
-      <div class="col-md-12" *ngFor="let child of dialogData.children; let i = index">
-            <strong>Child {{ i + 1 }}</strong><br>
-            Name: {{ child.name }} <br>
-            Qualification: {{ child.qualification }} <br>
-            Aadhaar: {{ child.aadhaar }}
-      </div>
-      
-      <div class="col-md-12">
+
+      <ng-container *ngFor="let child of dialogData.children; let i = index">
+        <div class="col-md-12" *ngIf="child?.name || child?.qualification || child?.aadhaar">
+          <strong>Child {{ i + 1 }}</strong><br>
+          <span *ngIf="child?.name">Name: {{ child.name }} <br></span>
+          <span *ngIf="child?.qualification">Qualification: {{ child.qualification }} <br></span>
+          <span *ngIf="child?.aadhaar">Aadhaar: {{ child.aadhaar }}</span>
+        </div>
+      </ng-container>
+
+      <div class="col-md-12" *ngIf="dialogData.jobDescription">
         <strong>Job Description:</strong>
         <p class="text-muted mb-0">{{ dialogData.jobDescription }}</p>
       </div>
+
       <div class="col-md-12 mt-4" *ngIf="dialogData.documentId">
         <strong>Uploaded Document:</strong>
-
-        <!-- Image Preview -->
         <div class="mt-2">
-          <img [src]="getDocumentUrl()" class="img-fluid rounded border" style="max-height: 250px;"
-            alt="Document Preview" onerror="this.style.display='none'" />
+          <img [src]="getDocumentUrl()" class="img-fluid rounded border" style="max-height: 250px;" alt="Document Preview" onerror="this.style.display='none'" />
         </div>
-
-        <!-- Open Button (PDF or fallback) -->
         <div class="mt-2">
-          <a [href]="getDocumentUrl()" target="_blank" class="btn btn-sm btn-outline-primary">
-            Open Document
-          </a>
+          <a [href]="getDocumentUrl()" target="_blank" class="btn btn-sm btn-outline-primary">Open Document</a>
         </div>
       </div>
 
-      <button class="btn btn-secondary" (click)="closeDialog()">Close</button>
+      <div class="col-12 text-end">
+        <button class="btn btn-secondary" (click)="closeDialog()">Close</button>
+      </div>
     </div>
   </div>
 </div>

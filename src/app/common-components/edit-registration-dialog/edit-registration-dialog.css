@@ -1,0 +1,90 @@
+.edit-modal {
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+  max-height: 92vh;
+}
+
+.edit-modal .modal-header {
+  margin: 0;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.edit-modal .modal-body {
+  padding: 1.25rem;
+}
+
+.scrollable-modal {
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: calc(92vh - 72px);
+  overflow: auto !important;
+}
+
+.edit-modal {
+  border-radius: 16px;
+  min-width: min(1100px, 96vw);
+}
+
+.edit-form {
+  margin: 0;
+  padding: 0;
+  box-shadow: none;
+}
+
+.section-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 0.9rem;
+}
+
+.section-toggle h4 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.toggle-btn {
+  border: 0;
+  background: transparent;
+  color: var(--text-dark);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.child-row {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  padding: 0.75rem;
+}
+
+.children-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.form-grid > * {
+  margin-bottom: 0;
+}
+
+.form-grid .form-control {
+  min-height: 44px;
+}
+
+.form-grid textarea.form-control {
+  min-height: 110px;
+}
+
+.action-bar .cu_btn,
+.action-bar .cu_btn-secondary {
+  min-width: 140px;
+}
+
+:host ::ng-deep .edit-registration-panel .mat-mdc-dialog-surface {
+  overflow: hidden;
+  border-radius: 16px;
+}

@@ -1,0 +1,113 @@
+<div class="modal-content edit-modal">
+  <div class="modal-header">
+    <h5 class="modal-title">{{ title }}</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
+  </div>
+
+  <div class="modal-body scrollable-modal">
+    <form [formGroup]="form" (ngSubmit)="submit()" class="shadow__form edit-form">
+      <div class="section-toggle">
+        <h4>Registration Details</h4>
+        <button type="button" class="toggle-btn" (click)="toggleSection('registration')">
+          <mat-icon>{{ expandedSections['registration'] ? 'expand_less' : 'expand_more' }}</mat-icon>
+        </button>
+      </div>
+      @if (expandedSections['registration']) {
+      <div class="row g-3 mb-3 form-grid">
+        <div class="col-md-4"><input class="form-control" formControlName="firstName" placeholder="First Name"></div>
+        <div class="col-md-4"><input class="form-control" formControlName="middleName" placeholder="Middle Name"></div>
+        <div class="col-md-4"><input class="form-control" formControlName="lastName" placeholder="Last Name"></div>
+        <div class="col-md-4"><input class="form-control" formControlName="gender" placeholder="Gender"></div>
+        <div class="col-md-4"><input class="form-control" type="date" formControlName="dob"></div>
+        <div class="col-md-4"><input class="form-control" formControlName="age" placeholder="Age"></div>
+        <div class="col-md-4"><input class="form-control" formControlName="maritalStatus" placeholder="Marital Status"></div>
+        <div class="col-md-4"><input class="form-control" formControlName="mobile" placeholder="Mobile Number"></div>
+        <div class="col-md-4"><input class="form-control" formControlName="alternateMobile" placeholder="Alternate Mobile"></div>
+        <div class="col-md-4"><input class="form-control" formControlName="email" placeholder="Email"></div>
+        <div class="col-md-4"><input class="form-control" formControlName="aadhaar" placeholder="Aadhaar Number"></div>
+        <div class="col-md-4"><input class="form-control" formControlName="subCaste" placeholder="Sub-Caste / Gothram"></div>
+        <div class="col-md-4"><input class="form-control" formControlName="rationCardNo" placeholder="Ration Card Number"></div>
+      </div>
+      }
+
+      <div class="section-toggle">
+        <h4>Family Details</h4>
+        <button type="button" class="toggle-btn" (click)="toggleSection('family')">
+          <mat-icon>{{ expandedSections['family'] ? 'expand_less' : 'expand_more' }}</mat-icon>
+        </button>
+      </div>
+      @if (expandedSections['family']) {
+      <div class="row g-3 mb-3 form-grid">
+        <div class="col-md-4"><input class="form-control" formControlName="fatherName" placeholder="Father's Name"></div>
+        <div class="col-md-4"><input class="form-control" formControlName="fatherOccupation" placeholder="Father's Occupation"></div>
+        <div class="col-md-4"><input class="form-control" formControlName="fatherAadhaar" placeholder="Father's Aadhaar"></div>
+        <div class="col-md-4"><input class="form-control" formControlName="motherName" placeholder="Mother's Name"></div>
+        <div class="col-md-4"><input class="form-control" formControlName="motherOccupation" placeholder="Mother's Occupation"></div>
+        <div class="col-md-4"><input class="form-control" formControlName="motherAadhaar" placeholder="Mother's Aadhaar"></div>
+        <div class="col-md-4"><input class="form-control" formControlName="spouseName" placeholder="Spouse Name"></div>
+        <div class="col-md-4"><input class="form-control" formControlName="spouseOccupation" placeholder="Spouse Occupation"></div>
+        <div class="col-md-4"><input class="form-control" formControlName="spouseAadhaar" placeholder="Spouse Aadhaar"></div>
+        <div class="col-md-4"><input class="form-control" type="number" formControlName="numberOfChildren" placeholder="Number of Children" (change)="onChildCountChange()"></div>
+      </div>
+      <div formArrayName="children" class="children-list mb-3">
+        @for (child of children.controls; track child; let i = $index) {
+        <div [formGroupName]="i" class="row g-3 child-row form-grid">
+          <div class="col-md-4"><input class="form-control" formControlName="name" placeholder="Child Name"></div>
+          <div class="col-md-4"><input class="form-control" formControlName="qualification" placeholder="Qualification"></div>
+          <div class="col-md-4"><input class="form-control" formControlName="aadhaar" placeholder="Aadhaar Number"></div>
+        </div>
+        }
+      </div>
+      }
+
+      <div class="section-toggle">
+        <h4>Address Details</h4>
+        <button type="button" class="toggle-btn" (click)="toggleSection('address')">
+          <mat-icon>{{ expandedSections['address'] ? 'expand_less' : 'expand_more' }}</mat-icon>
+        </button>
+      </div>
+      @if (expandedSections['address']) {
+      <div class="row g-3 mb-3 form-grid">
+        <div class="col-md-4"><input class="form-control" formControlName="houseNo" placeholder="House No"></div>
+        <div class="col-md-4"><input class="form-control" formControlName="street" placeholder="Street"></div>
+        <div class="col-md-4"><input class="form-control" formControlName="city" placeholder="City"></div>
+        <div class="col-md-4"><input class="form-control" formControlName="district" placeholder="District"></div>
+        <div class="col-md-4"><input class="form-control" formControlName="mandal" placeholder="Mandal"></div>
+        <div class="col-md-4"><input class="form-control" formControlName="village" placeholder="Village"></div>
+      </div>
+      }
+
+      <div class="section-toggle">
+        <h4>Education Details</h4>
+        <button type="button" class="toggle-btn" (click)="toggleSection('education')">
+          <mat-icon>{{ expandedSections['education'] ? 'expand_less' : 'expand_more' }}</mat-icon>
+        </button>
+      </div>
+      @if (expandedSections['education']) {
+      <div class="row g-3 mb-3 form-grid">
+        <div class="col-md-6"><input class="form-control" formControlName="qualification" placeholder="Highest Qualification"></div>
+        <div class="col-md-6"><input class="form-control" formControlName="course" placeholder="Course"></div>
+      </div>
+      }
+
+      <div class="section-toggle">
+        <h4>Job Details</h4>
+        <button type="button" class="toggle-btn" (click)="toggleSection('job')">
+          <mat-icon>{{ expandedSections['job'] ? 'expand_less' : 'expand_more' }}</mat-icon>
+        </button>
+      </div>
+      @if (expandedSections['job']) {
+      <div class="row g-3 mb-3">
+        <div class="col-12">
+          <textarea class="form-control" rows="3" formControlName="jobDescription" placeholder="Job Description"></textarea>
+        </div>
+      </div>
+      }
+
+      <div class="d-flex justify-content-end gap-2 action-bar">
+        <button type="button" class="cu_btn-secondary" (click)="close()">Cancel</button>
+        <button type="submit" class="cu_btn">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>

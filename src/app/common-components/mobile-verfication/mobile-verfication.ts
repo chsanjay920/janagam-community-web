@@ -94,13 +94,6 @@ export class MobileVerfication implements AfterViewInit {
         next: (response) => {
           this.dialogRef.close(response);
           console.log('Verification successful:', response);
-          this.dialogService.openDialog({
-            dialogType: 'Success',
-            title: 'Verification Successful!',
-            message: 'Your mobile number has been verified successfully.',
-            buttons: ['OK'],
-            actions: [() => {}],
-          });
         },
         error: (error) => {
           console.error('Verification failed:', error);
